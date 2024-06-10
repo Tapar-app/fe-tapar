@@ -22,7 +22,7 @@ function MainInput() {
       <input
         ref={inputRef}
         type="search"
-        className="bg-none w-[681px] h-[56px] outline-none border border-1 border-[#E1E1E1] pl-[50px] rounded-3xl custom-placeholder"
+        className="bg-none w-[681px] h-[56px] outline-none border border-1 border-[#E1E1E1] pl-[50px] rounded-[20px] custom-placeholder"
         placeholder="Axtardığıvı burda yaz!"
       />
       <button
