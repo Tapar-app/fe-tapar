@@ -5,7 +5,7 @@ interface HeaderProps {}
 
 export default function Header() {
   return (
-    <div>
+    <div className="fixed">
       <Icons.logo />
     </div>
   );
