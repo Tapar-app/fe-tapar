@@ -3,7 +3,7 @@ import React from "react";
 function MainTabs() {
   return (
     <div className="bg-[#F3F3F3] p-[8px] rounded-2xl">
-      <div className="flex flex-row space-x-5 transition-all delay-150">
+      <div className="flex flex-row transition-all delay-150">
         <button
           type="button"
           className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
