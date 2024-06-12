@@ -19,3 +19,26 @@
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
+
+.mainTabsPadding {
+  @apply xl:pl-[16px] xl:pr-[16px] xl:pt-[8px] xl:pb-[8px] pl-[8px] pr-[8px] pt-[5px] pb-[5px];
+}
+
+.searchIconPositions {
+  @apply 2xl:left-[33%] xl:left-[28.5%] ipad-pro-portrait:left-[18%]
+  ipad-pro-landscape:left-[26.3%]
+  ipad-air-portrait:left-[16.5%]
+  ipad-air-landscape:left-[22.5%]
+  ipad-mini-portrait:left-[14.2%]
+  ipad-mini-landscape:left-[18.5%] sm:left-[26%] left-[8%];
+}
+
+.inputClearPositions {
+  @apply 2xl:right-[33%] xl:right-[28.5%] 
+  ipad-pro-portrait:right-[18%] 
+  ipad-pro-landscape:right-[26.3%] 
+  ipad-air-portrait:right-[16.5%] 
+  ipad-air-landscape:right-[22.5%] 
+  ipad-mini-portrait:right-[14.2%] 
+  ipad-mini-landscape:right-[18.5%] sm:right-[26%] right-[8%];
+}

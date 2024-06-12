@@ -6,37 +6,37 @@ function MainTabs() {
       <div className="flex flex-row transition-all delay-150">
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Bütün Bazarlar
         </button>
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Sədərək
         </button>
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Binə
         </button>
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Laçın
         </button>
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Riyad
         </button>
         <button
           type="button"
-          className="font-[700] text-[14px] pl-[16px] pr-[16px] pt-[8px] pb-[8px] focus:bg-white rounded-lg transition-all ease-out"
+          className="font-[700] xl:text-[14px] text-[11px] mainTabsPadding focus:bg-white rounded-lg transition-all ease-out"
         >
           Abşeron
         </button>
