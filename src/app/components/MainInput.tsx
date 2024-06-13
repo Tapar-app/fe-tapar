@@ -5,24 +5,7 @@ import CloseSquare from "./CloseSquare";
 import { useRef } from "react";
 
 function MainInput() {
-  const [orientation, setOrientation] = useState("portrait");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const handleOrientationChange = () => {
-      if (window.innerHeight > window.innerWidth) {
-        setOrientation("portrait");
-      } else {
-        setOrientation("landscape");
-      }
-    };
-
-    handleOrientationChange();
-
-    window.addEventListener("resize", handleOrientationChange);
-
-    return () => window.removeEventListener("resize", handleOrientationChange);
-  }, []);
 
   const handleReset = () => {
     if (inputRef.current) {
