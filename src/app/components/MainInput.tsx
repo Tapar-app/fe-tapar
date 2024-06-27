@@ -14,8 +14,8 @@ function MainInput() {
   };
 
   return (
-    <div className="flex flex-row items-center">
-      <div className="absolute w-[24px] h-[24px] searchIconPositions">
+    <div className="flex flex-row items-center relative">
+      <div className="absolute w-[24px] h-[24px] left-4">
         <SearchIcon />
       </div>
 
@@ -27,7 +27,7 @@ function MainInput() {
       />
       <button
         type="button"
-        className="absolute w-[24px] h-[24px] text-[#8E8E8E] inputClearPositions opacity-[50%]"
+        className="absolute w-[24px] h-[24px] text-[#8E8E8E] right-4 opacity-[50%] hover:opacity-100"
         onClick={handleReset}
       >
         <CloseSquare />
