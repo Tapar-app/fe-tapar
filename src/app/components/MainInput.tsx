@@ -1,14 +1,11 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SearchIcon from "./SearchIcon";
 import CloseSquare from "./CloseSquare";
-
-interface MainInputProps {
-  keyword: string;
-  setKeyword: (keyword: string) => void;
-  activeTab: string;
-}
+import { MainInputProps, SearchResult } from "../types/searchTypes";
+import { fetchSearchSuggestions } from "../lib/search";
+import Image from "next/image";
 
 const bazaarIds: Record<string, number> = {
   Sədərək: 1,
@@ -23,15 +20,19 @@ const MainInput: React.FC<MainInputProps> = ({
   setKeyword,
   activeTab,
 }) => {
+  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const handleSearch = () => {
+    if (!keyword.trim()) return;
+    const encodedKeyword = encodeURIComponent(keyword);
     const shoppingCenterId =
       activeTab !== "Bütün bazarlar" ? bazaarIds[activeTab] : undefined;
     const params = new URLSearchParams(searchParams.toString());
-    params.set("keyword", keyword);
+    params.set("keyword", encodedKeyword);
     if (shoppingCenterId) {
       params.set("shoppingCenterId", shoppingCenterId.toString());
     } else {
@@ -45,37 +46,111 @@ const MainInput: React.FC<MainInputProps> = ({
     if (inputRef.current) {
       inputRef.current.value = "";
     }
+    setSuggestions([]);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
+    const value = e.target.value;
+    setKeyword(value);
+    if (value) {
+      fetchSearchSuggestions(value).then((results) => {
+        const updatedResults = results.map((item) => ({
+          ...item,
+          icon: `https://static.tapar.az/images/${item.icon}`,
+        }));
+        setSuggestions(updatedResults);
+      });
+    } else {
+      fetchSearchSuggestions("defaultSuggestions").then((results) => {
+        const updatedResults = results.map((item) => ({
+          ...item,
+          icon: `https://static.tapar.az/images/${item.icon}`,
+        }));
+        setSuggestions(updatedResults);
+      });
+    }
   };
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSearch();
   };
 
+  const handleOnFocus = () => {
+    fetchSearchSuggestions("defaultSuggestions").then((suggestions) => {
+      console.log("Suggestions on focus:", suggestions);
+      setSuggestions(suggestions);
+    });
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      inputRef.current &&
+      !inputRef.current.contains(event.target as Node) &&
+      suggestionsRef.current &&
+      !suggestionsRef.current.contains(event.target as Node)
+    ) {
+      setSuggestions([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-row items-center relative">
-      <div className="absolute w-[24px] h-[24px] left-4">
-        <SearchIcon />
+    <div className="flex flex-col items-center relative">
+      <div className="flex flex-row items-center w-full relative">
+        <div className="absolute w-[24px] h-[24px] left-4">
+          <SearchIcon />
+        </div>
+        <input
+          ref={inputRef}
+          type="search"
+          value={keyword}
+          onChange={handleOnChange}
+          onKeyDown={handleOnKeyDown}
+          onFocus={handleOnFocus}
+          className="bg-none lg:w-[681px] lg:h-[56px] md:w-[581px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder"
+          placeholder="Axtardığınızı bura yazın!"
+        />
+        <button
+          type="button"
+          className="absolute w-[24px] h-[24px] text-[#8E8E8E] right-4 opacity-[50%] hover:opacity-100"
+          onClick={handleReset}
+        >
+          <CloseSquare />
+        </button>
       </div>
-      <input
-        ref={inputRef}
-        type="search"
-        value={keyword}
-        onChange={handleOnChange}
-        onKeyDown={handleOnKeyDown}
-        className="bg-none lg:w-[681px] lg:h-[56px] md:w-[581px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder"
-        placeholder="Axtardığınızı bura yazın!"
-      />
-      <button
-        type="button"
-        className="absolute w-[24px] h-[24px] text-[#8E8E8E] right-4 opacity-[50%] hover:opacity-100"
-        onClick={handleReset}
-      >
-        <CloseSquare />
-      </button>
+      {suggestions.length > 0 && (
+        <ul
+          ref={suggestionsRef}
+          className="absolute top-[66px] left-0 w-full bg-white border rounded-[20px] border-[#E1E1E1] z-10 transition-opacity duration-300 ease-in-out transform"
+        >
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={suggestion.id}
+              className={`flex items-center p-3 cursor-pointer hover:bg-gray-100 transition-all ease-in-out ${
+                index === 0 ? "rounded-t-[20px]" : ""
+              } ${index === suggestions.length - 1 ? "rounded-b-[20px]" : ""}`}
+              onClick={() => {
+                setKeyword(suggestion.name);
+                handleSearch();
+              }}
+            >
+              <Image
+                src={suggestion.icon}
+                alt={suggestion.name}
+                width={24}
+                height={24}
+              />
+              <span className="ml-2 text-[16px]">{suggestion.name}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

@@ -2,24 +2,13 @@
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Image from "next/image";
-import fetchSearchResults from "../lib/search";
-
-interface SearchResult {
-  id: number;
-  name: string;
-  icon: string;
-  shoppingCenter: {
-    id: number;
-    name: string;
-    active: boolean;
-  };
-}
+import { SearchResult } from "../types/searchTypes";
+import { fetchSearchResults } from "../lib/search";
 
 const SearchResults: React.FC = () => {
   const searchParams = useSearchParams();
-  const keyword = searchParams.get("keyword") || "";
+  const keyword = decodeURIComponent(searchParams.get("keyword") || "");
   const shoppingCenterId = searchParams.get("shoppingCenterId") || "";
 
   const {
@@ -45,7 +34,7 @@ const SearchResults: React.FC = () => {
         searchResult.map((item) => (
           <div key={item.id} className="p-4 border-b">
             <h3 className="font-bold">{item.name}</h3>
-            <Image src={item.icon} alt={item.name} width={24} height={24} />
+            <Image src="/" alt={item.name} width={24} height={24} />
             <p>Shopping Center: {item.shoppingCenter.name}</p>
           </div>
         ))
