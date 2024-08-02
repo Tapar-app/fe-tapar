@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.box {
+  @apply w-full px-[50px];
+}
+
 .exclamation-mark {
   display: inline-block;
   position: relative;
