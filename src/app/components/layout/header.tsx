@@ -6,6 +6,7 @@ interface HeaderProps {}
 
 export default function Header() {
   return (
+
     <div className="sticky top-0 pl-[50px] pr-[50px] pt-[26px] pb-[26px] h-[100px] w-full">
       <div className={"flex items-center gap-[30px]"}>
         <Icons.logo />
@@ -14,5 +15,6 @@ export default function Header() {
         </Link>
       </div>
     </div>
+
   );
 }
