@@ -34,7 +34,7 @@ const SearchResults: React.FC = () => {
         searchResult.map((item) => (
           <div key={item.id} className="p-4 border-b">
             <h3 className="font-bold">{item.name}</h3>
-            <Image src="/" alt={item.name} width={24} height={24} />
+            <Image src="" alt={item.name} width={24} height={24} />
             <p>Shopping Center: {item.shoppingCenter.name}</p>
           </div>
         ))

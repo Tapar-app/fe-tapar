@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SearchResult } from "../types/searchTypes";
 
-const defaultSuggestions: SearchResult[] = [
+export const defaultSuggestions: SearchResult[] = [
   {
     id: 1,
     name: "Lampalar",
