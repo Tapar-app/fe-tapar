@@ -31,6 +31,7 @@ const SearchResults: React.FC = () => {
 
   return (
     <div>
+
       {searchResult && searchResult.data.object.length > 0 ? (
         searchResult.data.object.map((item) => (
           <div key={item.id} className={"p-[15px] flex"}>
@@ -40,6 +41,7 @@ const SearchResults: React.FC = () => {
               width={30}
               height={30}
             />
+
           </div>
         ))
       ) : (

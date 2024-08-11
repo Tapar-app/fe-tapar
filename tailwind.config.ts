@@ -25,7 +25,7 @@ const config: Config = {
           raw: "(min-width: 768px) and (max-width: 819px) and (orientation: portrait)",
         },
         "ipad-mini-landscape": {
-          raw: "(min-width: 768px) and (max-width: 1024px) and (orientation: landscape)",
+          raw: "(min-width: 1024px) and (max-width: 768px) and (orientation: landscape)",
         },
         "iphone-5-portrait": {
           raw: "(min-width: 320px) and (max-width: 374px) and (orientation: portrait)",
@@ -44,6 +44,18 @@ const config: Config = {
         },
         "iphone-6-plus-landscape": {
           raw: "(min-width: 736px) and (max-width: 960px) and (orientation: landscape)",
+        },
+        "iphone-12-pro-portrait": {
+          raw: "(min-width: 390px) and (max-width: 844px) and (orientation: portrait)",
+        },
+        "iphone-12-pro-landscape": {
+          raw: "(min-width: 844px) and (max-width: 390px) and (orientation: landscape)",
+        },
+        "iphone-14-pro-portrait": {
+          raw: "(min-width: 430px) and (max-width: 932px) and (orientation: portrait)",
+        },
+        "iphone-14-pro-landscape": {
+          raw: "(min-width: 932px) and (max-width: 430px) and (orientation: landscape)",
         },
         xl: "1440px",
       },

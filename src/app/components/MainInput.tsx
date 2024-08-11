@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SearchIcon from "./SearchIcon";
 import CloseSquare from "./CloseSquare";
 import { MainInputProps, SearchResult } from "../types/searchTypes";
-import { fetchSearchSuggestions } from "../lib/search";
+import { defaultSuggestions, fetchSearchSuggestions } from "../lib/search";
 import Image from "next/image";
 
 const bazaarIds: Record<string, number> = {
@@ -21,12 +21,35 @@ const MainInput: React.FC<MainInputProps> = ({
   activeTab,
 }) => {
   const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
+  const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleSearch = () => {
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedKeyword(keyword);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [keyword]);
+
+  useEffect(() => {
+    if (debouncedKeyword) {
+      fetchSearchSuggestions(debouncedKeyword).then((results) => {
+        const updatedResults = results.map((item) => ({
+          ...item,
+          icon: `https://static.tapar.az/images/${item.icon}`,
+        }));
+        setSuggestions(updatedResults);
+      });
+    }
+  }, [debouncedKeyword]);
+
+  const handleSearch = (keyword: string) => {
     if (!keyword.trim()) return;
     const encodedKeyword = encodeURIComponent(keyword);
     const shoppingCenterId =
@@ -52,34 +75,17 @@ const MainInput: React.FC<MainInputProps> = ({
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
-    if (value) {
-      fetchSearchSuggestions(value).then((results) => {
-        const updatedResults = results.map((item) => ({
-          ...item,
-          icon: `https://static.tapar.az/images/${item.icon}`,
-        }));
-        setSuggestions(updatedResults);
-      });
-    } else {
-      fetchSearchSuggestions("defaultSuggestions").then((results) => {
-        const updatedResults = results.map((item) => ({
-          ...item,
-          icon: `https://static.tapar.az/images/${item.icon}`,
-        }));
-        setSuggestions(updatedResults);
-      });
+    if (!value) {
+      setSuggestions(defaultSuggestions);
     }
   };
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSearch();
+    if (e.key === "Enter") handleSearch(keyword);
   };
 
   const handleOnFocus = () => {
-    fetchSearchSuggestions("defaultSuggestions").then((suggestions) => {
-      console.log("Suggestions on focus:", suggestions);
-      setSuggestions(suggestions);
-    });
+    setSuggestions(defaultSuggestions);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -127,7 +133,7 @@ const MainInput: React.FC<MainInputProps> = ({
       {suggestions.length > 0 && (
         <ul
           ref={suggestionsRef}
-          className="absolute top-[66px] left-0 w-full bg-white border rounded-[20px] border-[#E1E1E1] z-10 transition-opacity duration-300 ease-in-out transform"
+          className="absolute top-[66px] left-0 w-full bg-white border rounded-[20px] border-[#E1E1E1] z-10 transition-opacity duration-300 ease-in-out transform opacity-100 translate-y-0"
         >
           {suggestions.map((suggestion, index) => (
             <li
@@ -137,7 +143,7 @@ const MainInput: React.FC<MainInputProps> = ({
               } ${index === suggestions.length - 1 ? "rounded-b-[20px]" : ""}`}
               onClick={() => {
                 setKeyword(suggestion.name);
-                handleSearch();
+                handleSearch(suggestion.name);
               }}
             >
               <Image
