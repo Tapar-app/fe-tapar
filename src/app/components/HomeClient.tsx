@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import MainInput from "./MainInput";
 import MainTabs from "./MainTabs";
 
@@ -20,7 +20,9 @@ const HomeClient: React.FC = () => {
         setKeyword={setKeyword}
         activeTab={activeTab}
       />
-      <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Suspense>
+        <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Suspense>
     </div>
   );
 };
