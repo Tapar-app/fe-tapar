@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { SearchResult } from "../types/searchTypes";
 import { fetchSearchResults } from "../lib/search";
+import { CategoryApi } from "@/app/lib/api/category.api";
 
 const SearchResults: React.FC = () => {
   const searchParams = useSearchParams();
@@ -15,12 +16,12 @@ const SearchResults: React.FC = () => {
     data: searchResult,
     error,
     isLoading,
-  } = useQuery<SearchResult[], Error>({
+  } = useQuery({
     queryKey: ["searchResults", keyword, shoppingCenterId],
     queryFn: () =>
-      fetchSearchResults(
+      CategoryApi.searchByKey(
         keyword,
-        shoppingCenterId ? Number(shoppingCenterId) : undefined
+        shoppingCenterId ? shoppingCenterId : null,
       ),
     enabled: !!keyword,
   });
@@ -30,12 +31,17 @@ const SearchResults: React.FC = () => {
 
   return (
     <div>
-      {searchResult && searchResult.length > 0 ? (
-        searchResult.map((item) => (
-          <div key={item.id} className="p-4 border-b">
-            <h3 className="font-bold">{item.name}</h3>
-            <Image src="" alt={item.name} width={24} height={24} />
-            <p>Shopping Center: {item.shoppingCenter.name}</p>
+
+      {searchResult && searchResult.data.object.length > 0 ? (
+        searchResult.data.object.map((item) => (
+          <div key={item.id} className={"p-[15px] flex"}>
+            <Image
+              src={process.env.NEXT_PUBLIC_STATIC_URL + item.icon}
+              alt={item.icon}
+              width={30}
+              height={30}
+            />
+
           </div>
         ))
       ) : (
