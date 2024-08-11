@@ -5,7 +5,7 @@ import MainTabs from "./MainTabs";
 
 const HomeClient: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<string>("Bütün bazarlar");
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
     <div className="flex flex-col items-center space-y-10">
