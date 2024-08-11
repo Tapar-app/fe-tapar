@@ -34,7 +34,7 @@ export interface GetAllCategoriesByShoppingCenter extends ResponseType {
 
 export type SearchCategoryItem = {
   id: 0;
-  new: string;
+  name: string;
   icon: string;
   shoppingCenter: {
     id: number;
@@ -50,10 +50,10 @@ export const CategoryApi = {
   async getAllByShoppingCenterId(shoppingCenterId: string) {
     return await api.get(`${categoryBaseUrl}/all/main/sc/${shoppingCenterId}`);
   },
-  async searchByKey(key: string, shoppingCenterId: string | null) {
-    return await api.get(`${categoryBaseUrl}/search`, {
+  async searchByKey(keyword: string, shoppingCenterId: string | null) {
+    return await api.get<GetCategoriesByKey>(`${categoryBaseUrl}/search`, {
       params: {
-        key,
+        keyword,
         shoppingCenterId,
       },
     });
