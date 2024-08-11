@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import SearchResults from "../components/SearchResults";
 import MainTabs from "@/app/components/MainTabs";
 function SearchPage() {
@@ -8,10 +8,13 @@ function SearchPage() {
   return (
     <div className={"mx-[50px]"}>
       <div className={"flex justify-center"}>
-        <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Suspense>
+          <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        </Suspense>
       </div>
-
-      <SearchResults />
+      <Suspense>
+        <SearchResults />
+      </Suspense>
     </div>
   );
 }
