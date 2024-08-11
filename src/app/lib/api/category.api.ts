@@ -4,13 +4,14 @@ import { ResponseType } from "@/app/lib/types";
 const categoryBaseUrl = "/category";
 
 export type CategoryBazaar = {
-  id: number;
-  bazaar: {
-    id: number;
-    name: string;
-  };
+  bazaarId: number;
+  bazaarDetails: {
+    sequenceNumber: number;
+    shopNumbers: number[];
+  }[];
   sequenceNumber: number;
   shopNumber: number;
+  bazaarName: string;
 };
 
 export type ChildCategory = {
@@ -24,7 +25,7 @@ export type Category = {
   name: string;
   image: string;
   icon: string;
-  categoryBazaars: CategoryBazaar[];
+  bazaarGroups: CategoryBazaar[];
   childCategories: ChildCategory[];
 };
 
@@ -47,8 +48,15 @@ export interface GetCategoriesByKey extends ResponseType {
   object: SearchCategoryItem[];
 }
 export const CategoryApi = {
-  async getAllByShoppingCenterId(shoppingCenterId: string) {
-    return await api.get(`${categoryBaseUrl}/all/main/sc/${shoppingCenterId}`);
+  async getAll() {
+    return await api.get<GetAllCategoriesByShoppingCenter>(
+      `${categoryBaseUrl}/all/main`,
+    );
+  },
+  async getCategoryInformation(shoppingCenterId: string, categoryId: string) {
+    return await api.get<Category>(
+      `${categoryBaseUrl}/sc/${shoppingCenterId}/category/${categoryId}`,
+    );
   },
   async searchByKey(keyword: string, shoppingCenterId: string | null) {
     return await api.get<GetCategoriesByKey>(`${categoryBaseUrl}/search`, {
