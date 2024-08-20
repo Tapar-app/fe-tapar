@@ -12,7 +12,7 @@ export default function Page() {
   });
   return (
     <div className={"box mt-[30px]"}>
-      <div className={"flex gap-[30px]"}>
+      <div className={"flex gap-[30px] max-[1200px]:flex-col"}>
         <div className={"bg-[#FAFAFA] w-[353px] rounded-[16px] p-5"}>
           <h2 className={"text-[24px] font-medium mb-[15px]"}>
             Bütün kateqoriyalar
@@ -36,7 +36,11 @@ export default function Page() {
             ))}
           </div>
         </div>
-        <div className={"grid grid-cols-3 gap-[30px]"}>
+        <div
+          className={
+            "grid min-[640px]:grid-cols-2 min-[900px]:grid-cols-3 gap-[30px]"
+          }
+        >
           {data?.data?.object?.map((category) => (
             <Link
               href={`/search?keyword=${category.name}`}
@@ -48,7 +52,7 @@ export default function Page() {
                 alt={category.name}
                 width={300}
                 height={300}
-                className={"rounded-[10px]"}
+                className={"rounded-[10px] w-full"}
               />
               <div className={"mx-5"}>
                 <h3 className={"text-[20px] font-medium mt-2.5"}>

@@ -68,7 +68,56 @@ const SearchResults: React.FC = () => {
     <div>
       <h2 className={"font-semibold text-[32px] mt-7"}>{categoryData?.name}</h2>
       {categoryData ? (
-        <div className={"grid grid-cols-3 gap-[30px] mt-5  "}>
+        <div
+          className={
+            "grid grid-cols-1 min-[900px]:grid-cols-2 min-[1200px]:grid-cols-3 gap-[30px] mt-5  "
+          }
+        >
+          <div
+            className={
+              "bg-[#FAFAFA] rounded-[10px] p-[15px] flex  gap-5 h-[210px] max-h-[210px] "
+            }
+          >
+            <Image
+              src={process.env.NEXT_PUBLIC_STATIC_URL + categoryData!.image}
+              alt={categoryData?.name || ""}
+              width={168}
+              height={200}
+              className={"w-[168px] object-cover rounded-[10px] h-full"}
+            />
+            <div>
+              <h4
+                className={"text-[#23283C] text-[24px] font-medium mb-[15px]"}
+              >
+                {categoryData.name}
+              </h4>
+              <h5 className={"mb-[10px] text-[#6D7287]"}>Sıra</h5>
+              <div className={"flex mb-[10px] gap-2.5"}>
+                <div
+                  className={
+                    "w-6 h-6 border-[#E1E1E1] border rounded-[6px] bg-white flex justify-center items-center text-[12px]"
+                  }
+                >
+                  {categoryData.bazaarGroups[0].bazaarDetails[0].sequenceNumber}
+                </div>
+              </div>
+              <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
+              <div className={"flex mb-[10px] gap-2.5"}>
+                {categoryData.bazaarGroups[0].bazaarDetails[0].shopNumbers.map(
+                  (shopNumber) => (
+                    <div
+                      className={
+                        "w-6 h-6 text-[#23283C]  bg-[#E1E1E1] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
+                      }
+                      key={shopNumber}
+                    >
+                      {shopNumber}
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+          </div>
           <div
             className={
               "bg-[#FAFAFA] rounded-[10px] p-[15px] flex  gap-5 h-[210px] max-h-[210px] "
