@@ -7,14 +7,6 @@ import { MainInputProps, SearchResult } from "../types/searchTypes";
 import { defaultSuggestions, fetchSearchSuggestions } from "../lib/search";
 import Image from "next/image";
 
-const bazaarIds: Record<string, number> = {
-  Sədərək: 1,
-  Binə: 2,
-  Laçın: 3,
-  Riyad: 4,
-  Abşeron: 5,
-};
-
 const MainInput: React.FC<MainInputProps> = ({
   keyword,
   setKeyword,
@@ -52,8 +44,7 @@ const MainInput: React.FC<MainInputProps> = ({
   const handleSearch = (keyword: string) => {
     if (!keyword.trim()) return;
     const encodedKeyword = encodeURIComponent(keyword);
-    const shoppingCenterId =
-      activeTab !== "Bütün bazarlar" ? bazaarIds[activeTab] : undefined;
+    const shoppingCenterId = activeTab !== 0 ? activeTab : undefined;
     const params = new URLSearchParams(searchParams.toString());
     params.set("keyword", encodedKeyword);
     if (shoppingCenterId) {

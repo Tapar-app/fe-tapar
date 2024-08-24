@@ -6,7 +6,7 @@ import SocialMedia from "./social-media";
 
 const HomeClient: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<string>("Bütün bazarlar");
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
     <div className="flex flex-col items-center min-h-[91vh]">
