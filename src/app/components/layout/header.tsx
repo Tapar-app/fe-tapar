@@ -12,7 +12,9 @@ export default function Header() {
         </Link>
         <Link
           href={"/categories"}
-          className={"bg-[#FAFAFA] py-2 sm:py-3  px-3 sm:px-5 text-[14px]"}
+          className={
+            "bg-[#FAFAFA] rounded-[10px] py-2 sm:py-3  px-3 sm:px-5 text-[14px]"
+          }
         >
           Bütün kateqoriyalar
         </Link>
