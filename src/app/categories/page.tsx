@@ -43,7 +43,7 @@ export default function Page() {
         >
           {data?.data?.object?.map((category) => (
             <Link
-              href={`/search?keyword=${category.name}`}
+              href={`/search?keyword=${category.name}&shoppingCenterId=${category.bazaarGroups[0].bazaarId}`}
               className={"w-full bg-[#FAFAFA] p-[15px] "}
               key={category.id}
             >
@@ -58,6 +58,9 @@ export default function Page() {
                 <h3 className={"text-[20px] font-medium mt-2.5"}>
                   {category.name}
                 </h3>
+                <p className={"mt-0.5 text-gray-500"}>
+                  {category.bazaarGroups[0].bazaarName}
+                </p>
                 <div className={"flex flex-col mt-2.5"}>
                   {category?.childCategories?.map((child) => (
                     <div
