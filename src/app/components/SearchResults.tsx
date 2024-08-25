@@ -5,11 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { Category, CategoryApi } from "@/app/lib/api/category.api";
 import Link from "next/link";
+import clsx from "clsx";
 
 const SearchResults: React.FC = () => {
   const searchParams = useSearchParams();
   const keyword = decodeURIComponent(searchParams.get("keyword") || "");
-
+  const [loading, setLoading] = useState<boolean>(true);
   const shoppingCenterId = searchParams.get("shoppingCenterId") || "0";
   const {
     data: searchResult,
@@ -26,17 +27,31 @@ const SearchResults: React.FC = () => {
     enabled: !!keyword,
   });
   const [categoryData, setCategoryData] = useState<Category | null>(null);
+  const [selectedSequence, setSelectedSequence] = useState<{
+    sequenceNumber: number;
+    shopNumbers: number[];
+  } | null>(null);
   useEffect(() => {
     if (searchResult?.data?.object[0]?.id) {
+      setLoading(true);
       CategoryApi.getCategoryInformation(
         shoppingCenterId,
         String(searchResult.data.object[0].id) as string,
-      ).then((res) => {
-        setCategoryData(res.data);
-      });
+      )
+        .then((res) => {
+          setCategoryData(res.data);
+          setSelectedSequence(res.data.bazaarGroups[0].bazaarDetails[0]);
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
   }, [searchResult]);
-  if (isLoading)
+
+  if (isLoading || loading)
     return (
       <div className={"w-full h-[400px] flex justify-center items-center"}>
         <div role="status">
@@ -75,7 +90,7 @@ const SearchResults: React.FC = () => {
         >
           <div
             className={
-              "bg-[#FAFAFA] rounded-[10px] p-[15px] flex  gap-5 h-[210px] max-h-[210px] "
+              "bg-[#FAFAFA] rounded-[10px] p-[15px] flex  gap-5 min-h-[210px]   max-sm:flex-col"
             }
           >
             <Image
@@ -83,83 +98,59 @@ const SearchResults: React.FC = () => {
               alt={categoryData?.name || ""}
               width={168}
               height={200}
-              className={"w-[168px] object-cover rounded-[10px] h-full"}
+              className={
+                "w-full sm:w-[168px] object-cover rounded-[10px] h-full"
+              }
             />
-            <div>
-              <h4
-                className={"text-[#23283C] text-[24px] font-medium mb-[15px]"}
+            <div className={"w-full"}>
+              <div
+                className={
+                  "flex w-full  justify-between items-center mb-[15px] gap-4"
+                }
               >
-                {categoryData.name}
-              </h4>
-              <h5 className={"mb-[10px] text-[#6D7287]"}>Sıra</h5>
-              <div className={"flex mb-[10px] gap-2.5"}>
-                <div
-                  className={
-                    "w-6 h-6 border-[#E1E1E1] border rounded-[6px] bg-white flex justify-center items-center text-[12px]"
-                  }
-                >
-                  {categoryData.bazaarGroups[0].bazaarDetails[0].sequenceNumber}
-                </div>
+                <h4 className={"text-[#23283C] text-[24px] font-medium "}>
+                  {categoryData.name}
+                </h4>
+                <p className={"text-[#6D7287] text-[12px]"}>
+                  {categoryData.bazaarGroups[0].bazaarName}
+                </p>
               </div>
-              <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
+
+              <h5 className={"mb-[10px] text-[#6D7287]"}>Sıra</h5>
+
               <div className={"flex mb-[10px] gap-2.5"}>
-                {categoryData.bazaarGroups[0].bazaarDetails[0].shopNumbers.map(
-                  (shopNumber) => (
+                {categoryData.bazaarGroups[0].bazaarDetails.map(
+                  (bazaarDetail) => (
                     <div
-                      className={
-                        "w-6 h-6 text-[#23283C]  bg-[#E1E1E1] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
-                      }
-                      key={shopNumber}
+                      onClick={() => {
+                        setSelectedSequence(bazaarDetail);
+                      }}
+                      key={bazaarDetail.sequenceNumber}
+                      className={clsx(
+                        "w-6 h-6  rounded-[6px] bg-white flex justify-center items-center text-[12px] cursor-pointer",
+                        selectedSequence?.sequenceNumber ===
+                          bazaarDetail.sequenceNumber
+                          ? "bg-[#F5A630] text-white"
+                          : "border-[#E1E1E1] border",
+                      )}
                     >
-                      {shopNumber}
+                      {bazaarDetail.sequenceNumber}
                     </div>
                   ),
                 )}
               </div>
-            </div>
-          </div>
-          <div
-            className={
-              "bg-[#FAFAFA] rounded-[10px] p-[15px] flex  gap-5 h-[210px] max-h-[210px] "
-            }
-          >
-            <Image
-              src={process.env.NEXT_PUBLIC_STATIC_URL + categoryData!.image}
-              alt={categoryData?.name || ""}
-              width={168}
-              height={200}
-              className={"w-[168px] object-cover rounded-[10px] h-full"}
-            />
-            <div>
-              <h4
-                className={"text-[#23283C] text-[24px] font-medium mb-[15px]"}
-              >
-                {categoryData.name}
-              </h4>
-              <h5 className={"mb-[10px] text-[#6D7287]"}>Sıra</h5>
-              <div className={"flex mb-[10px] gap-2.5"}>
-                <div
-                  className={
-                    "w-6 h-6 border-[#E1E1E1] border rounded-[6px] bg-white flex justify-center items-center text-[12px]"
-                  }
-                >
-                  {categoryData.bazaarGroups[0].bazaarDetails[0].sequenceNumber}
-                </div>
-              </div>
               <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
               <div className={"flex mb-[10px] gap-2.5"}>
-                {categoryData.bazaarGroups[0].bazaarDetails[0].shopNumbers.map(
-                  (shopNumber) => (
-                    <div
-                      className={
-                        "w-6 h-6 text-[#23283C]  bg-[#E1E1E1] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
-                      }
-                      key={shopNumber}
-                    >
-                      {shopNumber}
-                    </div>
-                  ),
-                )}
+                {selectedSequence?.shopNumbers.map((shopNumber) => (
+                  <div
+                    className={
+                      "w-6 h-6 text-[#23283C]  bg-[#E1E1E1] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
+                    }
+                    key={shopNumber}
+                  >
+                    {shopNumber}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

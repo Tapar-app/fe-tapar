@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .box {
-  @apply w-full px-[50px];
+  @apply w-full  px-10 sm:px-[50px];
 }
 
 .exclamation-mark {

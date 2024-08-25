@@ -6,7 +6,7 @@ function SearchPage() {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <div className={"mx-[50px]"}>
+    <div className={"mx-5 sm:mx-[50px]"}>
       <div className={"flex justify-center"}>
         <Suspense>
           <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
