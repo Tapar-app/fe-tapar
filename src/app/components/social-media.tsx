@@ -15,6 +15,9 @@ function SocialMedia() {
 
     if (isMobile) {
       window.location.href = instagramAppUrl;
+      setTimeout(() => {
+        window.location.href = instagramWebUrl;
+      }, 1000);
     } else {
       window.location.href = instagramWebUrl;
     }
@@ -22,11 +25,14 @@ function SocialMedia() {
 
   const handleTikTokClick = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const tiktokAppUrl = "tiktok://user/@tapar.az";
+    const tiktokAppUrl = "tiktok://user/profile/7398174947992388624";
     const tiktokWebUrl = "https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1";
 
     if (isMobile) {
       window.location.href = tiktokAppUrl;
+      setTimeout(() => {
+        window.location.href = tiktokWebUrl;
+      }, 1000);
     } else {
       window.location.href = tiktokWebUrl;
     }
