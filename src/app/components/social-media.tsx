@@ -7,9 +7,43 @@ function SocialMedia() {
     window.location.href = "mailto:info.taparaz@gmail.com";
   };
 
+  const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const instagramAppUrl = "instagram://user?username=tapar_az"; // Open in Instagram app
+    const instagramWebUrl =
+      "https://www.instagram.com/tapar_az?igsh=Ym4yYXpoN3lvd3Js"; // Open in browser
+
+    if (isMobile) {
+      window.location.href = instagramAppUrl;
+      setTimeout(() => {
+        window.location.href = instagramWebUrl;
+      }, 500);
+    } else {
+      window.location.href = instagramWebUrl;
+    }
+  };
+
+  const handleTikTokClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const tiktokAppUrl = "snssdk1128://user/profile/70123456789"; // Replace with the correct TikTok user ID
+    const tiktokWebUrl = "https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1"; // Open in browser
+
+    if (isMobile) {
+      window.location.href = tiktokAppUrl;
+      setTimeout(() => {
+        window.location.href = tiktokWebUrl;
+      }, 500);
+    } else {
+      window.location.href = tiktokWebUrl;
+    }
+  };
+
   return (
     <div className="flex items-center space-x-5">
       <Link
+        onClick={handleTikTokClick}
         href="https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1"
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px] items-center rounded-[10px] bg-[#FAFAFA]"
       >
@@ -22,6 +56,7 @@ function SocialMedia() {
         </h3>
       </Link>
       <Link
+        onClick={handleInstagramClick}
         href="https://www.instagram.com/tapar_az?igsh=Ym4yYXpoN3lvd3Js"
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px]  items-center rounded-[10px] bg-[#FAFAFA]"
       >
