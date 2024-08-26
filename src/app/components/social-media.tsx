@@ -7,8 +7,7 @@ function SocialMedia() {
     window.location.href = "mailto:info.taparaz@gmail.com";
   };
 
-  const handleInstagramClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleInstagramClick = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const instagramAppUrl = "instagram://user?username=tapar_az";
     const instagramWebUrl =
@@ -16,26 +15,28 @@ function SocialMedia() {
 
     if (isMobile) {
       window.location.href = instagramAppUrl;
-
       setTimeout(() => {
+        alert(
+          "Instagram app not found. Redirecting to Instagram in browser..."
+        );
         window.location.href = instagramWebUrl;
-      }, 500);
+      }, 1000);
     } else {
       window.location.href = instagramWebUrl;
     }
   };
 
-  const handleTikTokClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleTikTokClick = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const tiktokAppUrl = "snssdk1128://user/profile/70123456789";
+    const tiktokAppUrl = "snssdk1128://user/profile/7398174947992388624";
     const tiktokWebUrl = "https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1";
 
     if (isMobile) {
       window.location.href = tiktokAppUrl;
       setTimeout(() => {
+        alert("Tiktok app not found. Redirecting to Tiktok in browser...");
         window.location.href = tiktokWebUrl;
-      }, 500);
+      }, 1000);
     } else {
       window.location.href = tiktokWebUrl;
     }
