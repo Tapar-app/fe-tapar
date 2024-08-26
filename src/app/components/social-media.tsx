@@ -7,7 +7,7 @@ function SocialMedia() {
     window.location.href = "mailto:info.taparaz@gmail.com";
   };
 
-  const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleInstagramClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const instagramAppUrl = "instagram://user?username=tapar_az";
@@ -16,6 +16,7 @@ function SocialMedia() {
 
     if (isMobile) {
       window.location.href = instagramAppUrl;
+
       setTimeout(() => {
         window.location.href = instagramWebUrl;
       }, 500);
@@ -24,7 +25,7 @@ function SocialMedia() {
     }
   };
 
-  const handleTikTokClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleTikTokClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const tiktokAppUrl = "snssdk1128://user/profile/70123456789";
@@ -42,9 +43,8 @@ function SocialMedia() {
 
   return (
     <div className="flex items-center space-x-5">
-      <Link
+      <button
         onClick={handleTikTokClick}
-        href="https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1"
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px] items-center rounded-[10px] bg-[#FAFAFA]"
       >
         <div className="relative md:w-[24px] md:h-[24px] w-[22px] h-[22px]">
@@ -54,10 +54,9 @@ function SocialMedia() {
         <h3 className="md:text-[14px] text-[12px] text-[#23283C] pt-[6px]">
           Tiktok
         </h3>
-      </Link>
-      <Link
+      </button>
+      <button
         onClick={handleInstagramClick}
-        href="https://www.instagram.com/tapar_az?igsh=Ym4yYXpoN3lvd3Js"
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px]  items-center rounded-[10px] bg-[#FAFAFA]"
       >
         <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px]">
@@ -67,7 +66,7 @@ function SocialMedia() {
         <h3 className="md:text-[14px] text-[12px] text-[#23283C] pt-[6px]">
           Instagram
         </h3>
-      </Link>
+      </button>
       <button
         onClick={openEmail}
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px]  items-center rounded-[10px] bg-[#FAFAFA]"
