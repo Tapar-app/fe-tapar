@@ -10,9 +10,9 @@ function SocialMedia() {
   const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const instagramAppUrl = "instagram://user?username=tapar_az"; // Open in Instagram app
+    const instagramAppUrl = "instagram://user?username=tapar_az";
     const instagramWebUrl =
-      "https://www.instagram.com/tapar_az?igsh=Ym4yYXpoN3lvd3Js"; // Open in browser
+      "https://www.instagram.com/tapar_az?igsh=Ym4yYXpoN3lvd3Js";
 
     if (isMobile) {
       window.location.href = instagramAppUrl;
@@ -27,8 +27,8 @@ function SocialMedia() {
   const handleTikTokClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const tiktokAppUrl = "snssdk1128://user/profile/70123456789"; // Replace with the correct TikTok user ID
-    const tiktokWebUrl = "https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1"; // Open in browser
+    const tiktokAppUrl = "snssdk1128://user/profile/70123456789";
+    const tiktokWebUrl = "https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1";
 
     if (isMobile) {
       window.location.href = tiktokAppUrl;
