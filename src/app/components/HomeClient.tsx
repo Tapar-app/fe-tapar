@@ -12,7 +12,7 @@ const HomeClient: React.FC = () => {
     <div className="flex flex-col items-center md:min-h-[91vh] min-h-[78vh]">
       <div className="flex flex-col items-center justify-center flex-1 space-y-10">
         <div>
-          <h1 className="xl:text-[60px] lg:text-[60px] sm:text-[45px] text-[40px] font-semibold text-center">
+          <h1 className="xl:text-[60px] lg:text-[60px] sm:text-[40px] text-[40px] font-semibold text-center">
             Axtaran - <span className="text-[#F5A630]">Tapar</span>
             <span className="exclamation-mark">!</span>
           </h1>

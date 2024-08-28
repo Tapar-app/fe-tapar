@@ -8,7 +8,7 @@
 
 .exclamation-mark {
   display: inline-block;
-  position: relative;
+  position: static;
   color: transparent;
   background: linear-gradient(to bottom, #f5a630 60%, black 60%);
   -webkit-background-clip: text;
