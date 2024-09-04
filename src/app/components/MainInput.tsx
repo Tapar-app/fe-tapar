@@ -22,7 +22,7 @@ const MainInput: React.FC<MainInputProps> = ({
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedKeyword(keyword);
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(handler);
