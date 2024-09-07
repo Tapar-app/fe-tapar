@@ -22,7 +22,7 @@ const SearchResults: React.FC = () => {
     queryFn: () =>
       CategoryApi.searchByKey(
         keyword,
-        shoppingCenterId ? shoppingCenterId : null,
+        shoppingCenterId ? shoppingCenterId : null
       ),
     enabled: !!keyword,
   });
@@ -36,7 +36,7 @@ const SearchResults: React.FC = () => {
       setLoading(true);
       CategoryApi.getCategoryInformation(
         shoppingCenterId,
-        String(searchResult.data.object[0].id) as string,
+        String(searchResult.data.object[0].id) as string
       )
         .then((res) => {
           setCategoryData(res.data);
@@ -131,12 +131,12 @@ const SearchResults: React.FC = () => {
                         selectedSequence?.sequenceNumber ===
                           bazaarDetail.sequenceNumber
                           ? "bg-[#F5A630] text-white"
-                          : "border-[#E1E1E1] border",
+                          : "border-[#E1E1E1] border"
                       )}
                     >
                       {bazaarDetail.sequenceNumber}
                     </div>
-                  ),
+                  )
                 )}
               </div>
               <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
