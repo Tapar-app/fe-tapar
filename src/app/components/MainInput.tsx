@@ -22,7 +22,7 @@ const MainInput: React.FC<MainInputProps> = ({
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedKeyword(keyword);
-    }, 500);
+    }, 1000);
 
     return () => {
       clearTimeout(handler);
@@ -34,7 +34,9 @@ const MainInput: React.FC<MainInputProps> = ({
       fetchSearchSuggestions(debouncedKeyword).then((results) => {
         const updatedResults = results.map((item) => ({
           ...item,
-          icon: `https://static.tapar.az/images/${item.icon}`,
+          icon: item.icon
+            ? `${process.env.NEXT_PUBLIC_STATIC_URL}/${item.icon}`
+            : "/güzgülər.svg",
         }));
         setSuggestions(updatedResults);
       });
@@ -138,7 +140,7 @@ const MainInput: React.FC<MainInputProps> = ({
               }}
             >
               <Image
-                src={suggestion.icon}
+                src={suggestion.icon || "/güzgülər.svg"}
                 alt={suggestion.name}
                 width={24}
                 height={24}
