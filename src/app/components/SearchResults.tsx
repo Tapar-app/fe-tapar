@@ -126,13 +126,12 @@ const SearchResults: React.FC = () => {
                         setSelectedSequence(bazaarDetail);
                       }}
                       key={bazaarDetail.sequenceNumber}
-                      className={clsx(
-                        "w-6 h-6  rounded-[6px] bg-white flex justify-center items-center text-[12px] cursor-pointer",
+                      className={`w-6 h-6 rounded-[6px] flex justify-center items-center text-[12px] cursor-pointer ${
                         selectedSequence?.sequenceNumber ===
-                          bazaarDetail.sequenceNumber
+                        bazaarDetail.sequenceNumber
                           ? "bg-[#F5A630] text-white"
-                          : "border-[#E1E1E1] border"
-                      )}
+                          : "bg-white border-[#E1E1E1] border"
+                      }`}
                     >
                       {bazaarDetail.sequenceNumber}
                     </div>
