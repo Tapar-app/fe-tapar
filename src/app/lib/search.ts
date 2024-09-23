@@ -54,8 +54,14 @@ export const fetchSearchResults = async (
   if (shoppingCenterId) {
     url += `&shoppingCenterId=${shoppingCenterId}`;
   }
-  const { data } = await axios.get(url);
-  return data.object;
+  try {
+    const { data } = await axios.get(url);
+    console.log("Fetched results:", data.object);
+    return data.object;
+  } catch (error) {
+    console.error("Error fetching results:", error);
+    return [];
+  }
 };
 
 export const fetchSearchSuggestions = async (
