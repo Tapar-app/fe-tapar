@@ -101,7 +101,7 @@ const SearchResults: React.FC = () => {
                   src={process.env.NEXT_PUBLIC_STATIC_URL + categoryData!.image}
                   alt={categoryData?.name || ""}
                   fill
-                  className={"object-cover rounded-[10px]"}
+                  className="object-cover rounded-[10px]"
                   priority
                   quality={100}
                 />
@@ -143,7 +143,7 @@ const SearchResults: React.FC = () => {
 
                 <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
 
-                <div className={"grid grid-cols-7 mb-[10px] gap-3"}>
+                <div className={"grid grid-cols-7 gap-3"}>
                   {selectedSequence?.shopNumbers.map((shopNumber) => (
                     <div
                       className={
