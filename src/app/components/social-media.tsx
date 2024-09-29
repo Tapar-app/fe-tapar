@@ -26,7 +26,7 @@ function SocialMedia() {
   return (
     <div className="flex items-center space-x-5">
       <Link
-        href="https://www.tiktok.com/@tapar.az?_t=8p8L3apAdeb&_r=1"
+        href="https://www.tiktok.com/@tapar_az"
         className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px] items-center rounded-[10px] bg-[#FAFAFA]"
       >
         <div className="relative md:w-[24px] md:h-[24px] w-[22px] h-[22px]">
