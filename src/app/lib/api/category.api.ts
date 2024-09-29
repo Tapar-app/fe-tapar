@@ -18,8 +18,6 @@ export type CategoryBazaar = {
     sequenceNumber: number;
     shopNumbers: number[];
   }[];
-  sequenceNumber: number;
-  shopNumber: number;
   bazaarName: string;
 };
 
@@ -54,7 +52,10 @@ export const CategoryApi = {
       `${categoryBaseUrl}/all/main`
     );
   },
-  async getCategoryInformation(shoppingCenterId: string, categoryId: string) {
+  async getCategoryInformation(
+    shoppingCenterId: string | null,
+    categoryId: string
+  ) {
     return await api.get<Category>(
       `${categoryBaseUrl}/sc/${shoppingCenterId}/category/${categoryId}`
     );
