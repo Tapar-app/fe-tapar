@@ -28,9 +28,15 @@ const SearchResults: React.FC = () => {
 
   const [categoryData, setCategoryData] = useState<Category | null>(null);
   const [selectedSequence, setSelectedSequence] = useState<{
-    sequenceNumber: number;
-    shopNumbers: number[];
-  } | null>(null);
+    [key: number]: number;
+  }>({});
+
+  const handleSequenceSelect = (groupId: number, sequenceNumber: number) => {
+    setSelectedSequence((prev) => ({
+      ...prev,
+      [groupId]: sequenceNumber, // Update the selected sequence for the specific group
+    }));
+  };
 
   useEffect(() => {
     if (searchResult?.data?.object[0]?.id) {
@@ -41,7 +47,16 @@ const SearchResults: React.FC = () => {
       )
         .then((res) => {
           setCategoryData(res.data);
-          setSelectedSequence(res.data.bazaarGroups[0].bazaarDetails[0]);
+
+          // Setting the first sequence for each group as the default
+          const defaultSelections: { [key: number]: number } = {};
+          res.data.bazaarGroups.forEach((group) => {
+            if (group.bazaarDetails.length > 0) {
+              defaultSelections[group.bazaarId] =
+                group.bazaarDetails[0].sequenceNumber;
+            }
+          });
+          setSelectedSequence(defaultSelections);
           setLoading(false);
         })
         .finally(() => {
@@ -92,9 +107,7 @@ const SearchResults: React.FC = () => {
           {categoryData.bazaarGroups.map((group) => (
             <div
               key={group.bazaarId}
-              className={
-                "bg-[#FAFAFA] rounded-[10px] p-[15px] flex gap-5 min-h-[210px] max-sm:flex-col"
-              }
+              className="bg-[#FAFAFA] rounded-[10px] p-[15px] flex gap-5 min-h-[210px] max-sm:flex-col"
             >
               <div className="relative w-full h-[173px]">
                 <Image
@@ -106,31 +119,30 @@ const SearchResults: React.FC = () => {
                   quality={100}
                 />
               </div>
-              <div className={"w-full"}>
-                <div
-                  className={
-                    "flex w-full justify-between items-center mb-[15px] gap-4"
-                  }
-                >
-                  <h4 className={"text-[#23283C] text-[24px] font-medium "}>
+              <div className="w-full">
+                <div className="flex w-full justify-between items-center mb-[15px] gap-4">
+                  <h4 className="text-[#23283C] text-[24px] font-medium ">
                     {categoryData.name}
                   </h4>
-                  <p className={"text-[#6D7287] text-[12px]"}>
+                  <p className="text-[#6D7287] text-[12px]">
                     {group.bazaarName}
                   </p>
                 </div>
 
-                <h5 className={"mb-[10px] text-[#6D7287]"}>Sıra</h5>
+                <h5 className="mb-[10px] text-[#6D7287]">Sıra</h5>
 
-                <div className={"flex mb-[10px] gap-2.5"}>
+                <div className="flex mb-[10px] gap-2.5">
                   {group.bazaarDetails.map((bazaarDetail) => (
                     <div
-                      onClick={() => {
-                        setSelectedSequence(bazaarDetail);
-                      }}
+                      onClick={() =>
+                        handleSequenceSelect(
+                          group.bazaarId,
+                          bazaarDetail.sequenceNumber
+                        )
+                      }
                       key={bazaarDetail.sequenceNumber}
                       className={`w-6 h-6 rounded-[6px] flex justify-center items-center text-[12px] cursor-pointer ${
-                        selectedSequence?.sequenceNumber ===
+                        selectedSequence[group.bazaarId] ===
                         bazaarDetail.sequenceNumber
                           ? "bg-[#F5A630] text-white"
                           : "bg-white border-[#E1E1E1] border"
@@ -141,19 +153,23 @@ const SearchResults: React.FC = () => {
                   ))}
                 </div>
 
-                <h5 className={"mb-[10px] text-[#6D7287]"}>Mağaza</h5>
+                <h5 className="mb-[10px] text-[#6D7287]">Mağaza</h5>
 
-                <div className={"grid grid-cols-7 gap-3"}>
-                  {selectedSequence?.shopNumbers.map((shopNumber) => (
-                    <div
-                      className={
-                        "w-6 h-6 text-[#23283C] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
-                      }
-                      key={shopNumber}
-                    >
-                      {shopNumber}
-                    </div>
-                  ))}
+                <div className="grid grid-cols-7 gap-3">
+                  {group.bazaarDetails
+                    .find(
+                      (bazaarDetail) =>
+                        bazaarDetail.sequenceNumber ===
+                        selectedSequence[group.bazaarId]
+                    )
+                    ?.shopNumbers.map((shopNumber) => (
+                      <div
+                        className="w-6 h-6 text-[#23283C] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
+                        key={shopNumber}
+                      >
+                        {shopNumber}
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
