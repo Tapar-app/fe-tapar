@@ -43,18 +43,11 @@ const MainInput: React.FC<MainInputProps> = ({
     }
   }, [debouncedKeyword]);
 
-  const handleSearch = (keyword: string) => {
-    if (!keyword.trim()) return;
-    const encodedKeyword = encodeURIComponent(keyword);
-    const shoppingCenterId = activeTab !== 0 ? activeTab : undefined;
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("keyword", encodedKeyword);
-    if (shoppingCenterId) {
-      params.set("shoppingCenterId", shoppingCenterId.toString());
-    } else {
-      params.delete("shoppingCenterId");
-    }
-    router.push(`/search?${params.toString()}`);
+  const handleSearch = (categoryId: number, shoppingCenterId: number) => {
+    if (!categoryId) return;
+    router.push(
+      `/search?categoryId=${categoryId}&shoppingCenterId=${shoppingCenterId}`
+    );
   };
 
   const handleReset = () => {
@@ -74,7 +67,12 @@ const MainInput: React.FC<MainInputProps> = ({
   };
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSearch(keyword);
+    if (e.key !== "Enter" || !keyword.trim()) return;
+
+    const firstSuggestion = suggestions[0];
+    if (firstSuggestion) {
+      handleSearch(firstSuggestion.id, firstSuggestion.shoppingCenter.id);
+    }
   };
 
   const handleOnFocus = () => {
@@ -93,9 +91,9 @@ const MainInput: React.FC<MainInputProps> = ({
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -136,7 +134,7 @@ const MainInput: React.FC<MainInputProps> = ({
               } ${index === suggestions.length - 1 ? "rounded-b-[20px]" : ""}`}
               onClick={() => {
                 setKeyword(suggestion.name);
-                handleSearch(suggestion.name);
+                handleSearch(suggestion.id, suggestion.shoppingCenter.id);
               }}
             >
               <Image
