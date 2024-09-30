@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Page() {
-  const { data } = useQuery({
+  const { data: categoryData } = useQuery({
     queryKey: ["categories"],
     queryFn: CategoryApi.getAll,
   });
@@ -19,9 +19,9 @@ export default function Page() {
           </h2>
 
           <div className={"flex flex-col"}>
-            {data?.data?.object?.map((category) => (
+            {categoryData?.data?.object?.map((category) => (
               <Link
-                href={`/search?keyword=${category.name}`}
+                href={`/search?categoryId=${category.id}`}
                 key={category.id}
                 className={"flex gap-3 h-11  items-center"}
               >
@@ -41,9 +41,9 @@ export default function Page() {
             "grid min-[640px]:grid-cols-2 min-[900px]:grid-cols-3 gap-[30px]"
           }
         >
-          {data?.data?.object?.map((category) => (
+          {categoryData?.data?.object?.map((category) => (
             <Link
-              href={`/search?keyword=${category.name}&shoppingCenterId=${category.bazaarGroups[0].bazaarId}`}
+              href={`/search?categoryId=${category.id}&shoppingCenterId=${category.bazaarGroups[0].bazaarId}`}
               className={"w-full bg-[#FAFAFA] p-[15px] "}
               key={category.id}
             >
