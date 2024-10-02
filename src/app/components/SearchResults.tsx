@@ -6,11 +6,11 @@ import Image from "next/image";
 import { Category, CategoryApi } from "@/app/lib/api/category.api";
 import Link from "next/link";
 import Loading from "./Loading";
+import ItemsNotFound from "./melumat-tapilmadi";
 
 const SearchResults: React.FC = () => {
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId") || "";
-
   const shoppingCenterId = searchParams.get("shoppingCenterId") || "0";
 
   // Fetching category data by ID
@@ -40,7 +40,7 @@ const SearchResults: React.FC = () => {
 
   useEffect(() => {
     if (categoryData) {
-      // Set the first sequence as default
+      // Setting the first sequence as default
       const defaultSelections: { [key: number]: number } = {};
       categoryData.bazaarGroups.forEach((group) => {
         if (group.bazaarDetails.length > 0) {
@@ -142,18 +142,7 @@ const SearchResults: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className={"flex flex-col w-full items-center mt-[50px] "}>
-          <h2 className={"font-semibold text-[32px]"}>Məlumat tapılmadı :(</h2>
-          <Image
-            src={"/not-found.png"}
-            alt={"Not found"}
-            width={375}
-            height={282}
-          />
-          <Link href={"/"} className={"text-[#F5A630] underline text-[14px]"}>
-            Ana səhifəyə qayıt
-          </Link>
-        </div>
+        <ItemsNotFound />
       )}
     </div>
   );
