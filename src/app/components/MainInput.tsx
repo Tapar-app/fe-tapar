@@ -4,7 +4,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SearchIcon from "./SearchIcon";
 import CloseSquare from "./CloseSquare";
 import { MainInputProps, SearchResult } from "../types/searchTypes";
-import { defaultSuggestions, fetchSearchSuggestions } from "../lib/search";
+import {
+  defaultSuggestions,
+  fetchSearchResults,
+  fetchSearchSuggestions,
+} from "../lib/search";
 import Image from "next/image";
 
 const MainInput: React.FC<MainInputProps> = ({
@@ -43,8 +47,9 @@ const MainInput: React.FC<MainInputProps> = ({
     }
   }, [debouncedKeyword]);
 
-  const handleSearch = (categoryId: number, shoppingCenterId: number) => {
-    if (!categoryId) return;
+  const handleSearch = async (categoryId: number, shoppingCenterId: number) => {
+    if (!categoryId || !shoppingCenterId) return;
+
     router.push(
       `/search?categoryId=${categoryId}&shoppingCenterId=${shoppingCenterId}`
     );
@@ -66,12 +71,22 @@ const MainInput: React.FC<MainInputProps> = ({
     }
   };
 
-  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter" || !keyword.trim()) return;
 
-    const firstSuggestion = suggestions[0];
-    if (firstSuggestion) {
-      handleSearch(firstSuggestion.id, firstSuggestion.shoppingCenter.id);
+    try {
+      const searchResults = await fetchSearchResults(keyword);
+
+      if (searchResults.length > 0) {
+        const { id, shoppingCenter } = searchResults[0];
+        router.push(
+          `/search?categoryId=${id}&shoppingCenterId=${shoppingCenter.id}`
+        );
+      } else {
+        router.push(`/search?keyword=${keyword}`);
+      }
+    } catch (error) {
+      console.error("Search failed:", error);
     }
   };
 
