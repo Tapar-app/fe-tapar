@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .box {
-  @apply w-full pl-10;
+  @apply w-full sm:p-10 p-5;
 }
 
 .exclamation-mark {
