@@ -4,11 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SearchIcon from "./SearchIcon";
 import CloseSquare from "./CloseSquare";
 import { MainInputProps, SearchResult } from "../types/searchTypes";
-import {
-  defaultSuggestions,
-  fetchSearchResults,
-  fetchSearchSuggestions,
-} from "../lib/search";
+import { fetchSearchResults, fetchSearchSuggestions } from "../lib/search";
 import Image from "next/image";
 
 const MainInput: React.FC<MainInputProps> = ({
@@ -34,17 +30,18 @@ const MainInput: React.FC<MainInputProps> = ({
   }, [keyword]);
 
   useEffect(() => {
-    if (debouncedKeyword) {
-      fetchSearchSuggestions(debouncedKeyword).then((results) => {
-        const updatedResults = results.map((item) => ({
-          ...item,
-          icon: item.icon
-            ? `${process.env.NEXT_PUBLIC_STATIC_URL}/${item.icon}`
-            : "/güzgülər.svg",
-        }));
-        setSuggestions(updatedResults);
-      });
-    }
+    const fetchSuggestions = async () => {
+      const results = await fetchSearchSuggestions(debouncedKeyword);
+      const updatedResults = results.map((item) => ({
+        ...item,
+        icon: item.icon
+          ? `${process.env.NEXT_PUBLIC_STATIC_URL}/${item.icon}`
+          : "/güzgülər.svg",
+      }));
+      setSuggestions(updatedResults);
+    };
+
+    fetchSuggestions();
   }, [debouncedKeyword]);
 
   const handleSearch = async (categoryId: number, shoppingCenterId: number) => {
@@ -66,9 +63,6 @@ const MainInput: React.FC<MainInputProps> = ({
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
-    if (!value) {
-      setSuggestions(defaultSuggestions);
-    }
   };
 
   const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -88,10 +82,6 @@ const MainInput: React.FC<MainInputProps> = ({
     } catch (error) {
       console.error("Search failed:", error);
     }
-  };
-
-  const handleOnFocus = () => {
-    setSuggestions(defaultSuggestions);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -124,7 +114,6 @@ const MainInput: React.FC<MainInputProps> = ({
           value={keyword}
           onChange={handleOnChange}
           onKeyDown={handleOnKeyDown}
-          onFocus={handleOnFocus}
           className="bg-none lg:w-[681px] lg:h-[56px] md:w-[581px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder"
           placeholder="Axtardığınızı bura yazın!"
         />
