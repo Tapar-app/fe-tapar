@@ -43,7 +43,7 @@ export default function Page() {
         >
           {categoryData?.data?.object?.map((category) => (
             <Link
-              href={`/search?categoryId=${category.id}&shoppingCenterId=${category.bazaarGroups[0].bazaarId}`}
+              href={`/search?categoryId=${category.id}`}
               className={"w-full bg-[#FAFAFA] p-[15px] "}
               key={category.id}
             >
