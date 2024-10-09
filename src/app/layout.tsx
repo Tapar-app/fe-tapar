@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 import Header from "@/app/components/layout/header";
+import MatomoAnalytics from "./components/matomo-analytics";
 
 const inter = Poppins({
   subsets: ["latin"],
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -25,11 +26,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
+        <MatomoAnalytics>
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
+        </MatomoAnalytics>
       </body>
     </html>
   );
 }
+
+export default RootLayout;

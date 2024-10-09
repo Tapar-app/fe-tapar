@@ -24,11 +24,16 @@ export const fetchSearchResults = async (
 export const fetchSearchSuggestions = async (
   keyword: string
 ): Promise<SearchResult[]> => {
+  if (!keyword || keyword.trim().length === 0) {
+    console.error("Keyword is invalid or empty");
+    return [];
+  }
+
   const url = `${apiUrl}/search?keyword=${keyword}`;
   try {
     const { data } = await api.get(url);
     console.log("Fetched suggestions:", data.object);
-    return data.object;
+    return data.object.slice(0, 7);
   } catch (error) {
     console.error("Error fetching suggestions:", error);
     return [];
