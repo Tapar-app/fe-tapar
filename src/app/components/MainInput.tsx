@@ -37,7 +37,7 @@ const MainInput: React.FC<MainInputProps> = ({
   } = useQuery({
     queryKey: ["searchSuggestions", debouncedKeyword],
     queryFn: () => fetchSearchSuggestions(debouncedKeyword),
-    enabled: !!debouncedKeyword, // Only fetch when keyword is not empty
+    enabled: !!debouncedKeyword,
   });
 
   const handleSearch = async (categoryId: number, shoppingCenterId: number) => {
