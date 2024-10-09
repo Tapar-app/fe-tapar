@@ -17,12 +17,13 @@ const HomeClient: React.FC = () => {
             <span className="exclamation-mark">!</span>
           </h1>
         </div>
-
-        <MainInput
-          keyword={keyword}
-          setKeyword={setKeyword}
-          activeTab={activeTab}
-        />
+        <Suspense>
+          <MainInput
+            keyword={keyword}
+            setKeyword={setKeyword}
+            activeTab={activeTab}
+          />
+        </Suspense>
 
         <Suspense>
           <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
