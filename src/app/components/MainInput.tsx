@@ -6,18 +6,19 @@ import CloseSquare from "./CloseSquare";
 import { MainInputProps, SearchResult } from "../types/searchTypes";
 import { fetchSearchResults, fetchSearchSuggestions } from "../lib/search";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "./Loading";
 
 const MainInput: React.FC<MainInputProps> = ({
   keyword,
   setKeyword,
   activeTab,
 }) => {
-  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
+  const [suggestion, setSuggestion] = useState<SearchResult[]>([]);
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -29,20 +30,15 @@ const MainInput: React.FC<MainInputProps> = ({
     };
   }, [keyword]);
 
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      const results = await fetchSearchSuggestions(debouncedKeyword);
-      const updatedResults = results.map((item) => ({
-        ...item,
-        icon: item.icon
-          ? `${process.env.NEXT_PUBLIC_STATIC_URL}/${item.icon}`
-          : "/güzgülər.svg",
-      }));
-      setSuggestions(updatedResults);
-    };
-
-    fetchSuggestions();
-  }, [debouncedKeyword]);
+  const {
+    data: suggestions = [],
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["searchSuggestions", debouncedKeyword],
+    queryFn: () => fetchSearchSuggestions(debouncedKeyword),
+    enabled: !!debouncedKeyword, // Only fetch when keyword is not empty
+  });
 
   const handleSearch = async (categoryId: number, shoppingCenterId: number) => {
     if (!categoryId || !shoppingCenterId) return;
@@ -57,7 +53,7 @@ const MainInput: React.FC<MainInputProps> = ({
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    setSuggestions([]);
+    setSuggestion([]);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +87,7 @@ const MainInput: React.FC<MainInputProps> = ({
       suggestionsRef.current &&
       !suggestionsRef.current.contains(event.target as Node)
     ) {
-      setSuggestions([]);
+      setSuggestion([]);
     }
   };
 
@@ -125,33 +121,45 @@ const MainInput: React.FC<MainInputProps> = ({
           <CloseSquare />
         </button>
       </div>
-      {suggestions.length > 0 && (
+      {isLoading || suggestions.length > 0 ? (
         <ul
           ref={suggestionsRef}
           className="absolute top-[66px] left-0 w-full bg-white border rounded-[20px] border-[#E1E1E1] z-10 transition-opacity duration-300 ease-in-out transform opacity-100 translate-y-0"
         >
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={suggestion.id}
-              className={`flex items-center p-3 cursor-pointer hover:bg-gray-100 transition-all ease-in-out ${
-                index === 0 ? "rounded-t-[20px]" : ""
-              } ${index === suggestions.length - 1 ? "rounded-b-[20px]" : ""}`}
-              onClick={() => {
-                setKeyword(suggestion.name);
-                handleSearch(suggestion.id, suggestion.shoppingCenter.id);
-              }}
-            >
-              <Image
-                src={suggestion.icon || "/güzgülər.svg"}
-                alt={suggestion.name}
-                width={24}
-                height={24}
-              />
-              <span className="ml-2 text-[16px]">{suggestion.name}</span>
-            </li>
-          ))}
+          {isLoading ? (
+            <div className="flex justify-center">
+              <Loading />
+            </div>
+          ) : (
+            suggestions.map((suggestion, index) => (
+              <li
+                key={suggestion.id}
+                className={`flex items-center p-3 cursor-pointer hover:bg-gray-100 transition-all ease-in-out ${
+                  index === 0 ? "rounded-t-[20px]" : ""
+                } ${
+                  index === suggestions.length - 1 ? "rounded-b-[20px]" : ""
+                }`}
+                onClick={() => {
+                  setKeyword(suggestion.name);
+                  handleSearch(suggestion.id, suggestion.shoppingCenter.id);
+                }}
+              >
+                <Image
+                  src={
+                    suggestion.icon
+                      ? `${process.env.NEXT_PUBLIC_STATIC_URL}/${suggestion.icon}`
+                      : "/güzgülər.svg"
+                  }
+                  alt={suggestion.name}
+                  width={24}
+                  height={24}
+                />
+                <span className="ml-2 text-[16px]">{suggestion.name}</span>
+              </li>
+            ))
+          )}
         </ul>
-      )}
+      ) : null}
     </div>
   );
 };
