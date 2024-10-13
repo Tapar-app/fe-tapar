@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "TAPAR",
   description: "TAPAR.AZ",
   icons: {
-    icon: "Group 3.svg",
+    icon: "Group3.svg",
   },
 };
 
