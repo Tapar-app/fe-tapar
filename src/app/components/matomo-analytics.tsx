@@ -9,8 +9,6 @@ declare global {
   }
 }
 
-const isServer = typeof window === "undefined";
-
 // Function to initialize Matomo script
 function initializeMatomo() {
   if (!isServer) {
@@ -33,6 +31,8 @@ function initializeMatomo() {
 }
 
 let initialized = false;
+
+const isServer = typeof window === "undefined";
 
 function getMatomo() {
   if (!isServer && !initialized) {
