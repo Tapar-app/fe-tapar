@@ -11,6 +11,7 @@ const inter = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tapar.az"),
   title: "TAPAR",
   description: "TAPAR.AZ - Find the products you're looking for at TAPAR.",
   icons: {
@@ -43,9 +44,10 @@ export const metadata: Metadata = {
       },
     ],
   },
-  viewport: "width=device-width, initial-scale=1.0", // Responsive design settings
-  themeColor: "#ffffff", // Theme color for mobile browsers
 };
+
+export const generateViewport = () => "width=device-width, initial-scale=1.0";
+export const generateThemeColor = () => "#ffffff";
 
 function RootLayout({
   children,
