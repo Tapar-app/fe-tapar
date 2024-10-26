@@ -39,7 +39,7 @@ const HomeClient: React.FC = () => {
         </Suspense>
       </div>
 
-      <div className="md:hidden sm:flex-inline flex-inline">
+      <div className="md:hidden sm:flex-inline flex-inline mt-4 sm:mt-4">
         <SocialMedia />
       </div>
     </div>
