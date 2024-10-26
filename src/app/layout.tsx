@@ -46,14 +46,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Export `viewport` and `themeColor` separately
-export const viewport = {
-  width: "device-width",
-  initialScale: 1.0,
-};
-
-export const themeColor = "#ffffff";
-
 function RootLayout({
   children,
 }: Readonly<{
