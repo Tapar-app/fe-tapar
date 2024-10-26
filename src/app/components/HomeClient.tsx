@@ -3,6 +3,8 @@ import React, { Suspense, useState } from "react";
 import MainInput from "./MainInput";
 import MainTabs from "./MainTabs";
 import SocialMedia from "./social-media";
+import Banner from "./Banner";
+import BannerMobile from "./banner-mob";
 
 const HomeClient: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
@@ -11,6 +13,13 @@ const HomeClient: React.FC = () => {
   return (
     <div className="flex flex-col items-center md:min-h-[91vh] min-h-[78vh]">
       <div className="flex flex-col items-center justify-center flex-1 space-y-10">
+        <div className="hidden sm:hidden md:flex sm:justify-center">
+          <Banner />
+        </div>
+        <div className="flex sm:flex md:hidden">
+          <BannerMobile />
+        </div>
+
         <div>
           <h1 className="xl:text-[60px] lg:text-[60px] sm:text-[40px] text-[40px] font-semibold text-center">
             Axtaran - <span className="text-[#F5A630]">Tapar</span>
@@ -30,7 +39,9 @@ const HomeClient: React.FC = () => {
         </Suspense>
       </div>
 
-      <SocialMedia />
+      <div className="md:hidden sm:flex-inline flex-inline">
+        <SocialMedia />
+      </div>
     </div>
   );
 };

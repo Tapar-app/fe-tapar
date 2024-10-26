@@ -24,42 +24,24 @@ function SocialMedia() {
   };
 
   return (
-    <div className="flex items-center space-x-5">
+    <div className="flex items-center gap-x-[20px] opacity-[50%]">
       <Link
         href="https://www.tiktok.com/@tapar_az"
-        className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px] items-center rounded-[10px] bg-[#FAFAFA]"
+        className="flex flex-col items-center"
       >
         <div className="relative md:w-[24px] md:h-[24px] w-[22px] h-[22px]">
-          <Image src="ic_round-tiktok.svg" alt="Tiktok" fill />
+          <Image src="/ic_round-tiktok.svg" alt="Tiktok" fill />
         </div>
-
-        <h3 className="md:text-[14px] text-[12px] text-[#23283C] pt-[6px]">
-          Tiktok
-        </h3>
       </Link>
-      <button
-        onClick={handleInstagramClick}
-        className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px]  items-center rounded-[10px] bg-[#FAFAFA]"
-      >
+      <button onClick={handleInstagramClick} className="flex flex-col">
         <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px]">
-          <Image src="ri_instagram-fill.svg" alt="Instagram" fill />
+          <Image src="/ri_instagram-fill.svg" alt="Instagram" fill />
         </div>
-
-        <h3 className="md:text-[14px] text-[12px] text-[#23283C] pt-[6px]">
-          Instagram
-        </h3>
       </button>
-      <button
-        onClick={openEmail}
-        className="flex flex-col p-[10px] md:w-[120px] md:h-[73px] w-[90px] h-[63px]  items-center rounded-[10px] bg-[#FAFAFA]"
-      >
+      <button onClick={openEmail} className="flex flex-col">
         <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px]">
-          <Image src="majesticons_mail.svg" alt="Gmail" fill />
+          <Image src="/majesticons_mail.svg" alt="Gmail" fill />
         </div>
-
-        <h3 className="md:text-[14px] text-[12px] text-[#23283C] pt-[6px]">
-          Gmail
-        </h3>
       </button>
     </div>
   );
