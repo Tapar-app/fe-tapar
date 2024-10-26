@@ -11,7 +11,7 @@ export default function Page() {
     queryFn: CategoryApi.getAll,
   });
   return (
-    <div className={"box mt-[30px]"}>
+    <div className={"box "}>
       <div className={"flex gap-[30px] max-[1200px]:flex-col"}>
         <div className={"bg-[#FAFAFA] w-[353px] rounded-[16px] p-5"}>
           <h2 className={"text-[24px] font-medium mb-[15px]"}>
