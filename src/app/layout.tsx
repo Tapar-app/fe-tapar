@@ -46,8 +46,13 @@ export const metadata: Metadata = {
   },
 };
 
-export const generateViewport = () => "width=device-width, initial-scale=1.0";
-export const generateThemeColor = () => "#ffffff";
+// Export `viewport` and `themeColor` separately
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+};
+
+export const themeColor = "#ffffff";
 
 function RootLayout({
   children,
