@@ -27,3 +27,15 @@ input[type="search"]::-webkit-search-cancel-button {
 .mainTabsPadding {
   @apply xl:pl-[16px] xl:pr-[16px] xl:pt-[8px] xl:pb-[8px] pl-[8px] pr-[8px] pt-[5px] pb-[5px];
 }
+
+button .tooltip-hover {
+  visibility: hidden;
+  opacity: 0;
+}
+
+button:hover .tooltip-hover {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-5px);
+  z-index: 10;
+}
