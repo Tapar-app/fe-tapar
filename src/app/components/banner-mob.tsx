@@ -4,7 +4,7 @@ function BannerMobile() {
     <div className="relative">
       <div className="relative w-[330px] h-[224px]">
         <Image
-          src="/BannerMob.svg"
+          src="https://static.tapar.az/images/BannerMob.svg"
           alt="Mobile Banner"
           fill
           className="object-contain"
