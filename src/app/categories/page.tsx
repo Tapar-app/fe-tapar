@@ -44,16 +44,18 @@ export default function Page() {
           {categoryData?.data?.object?.map((category) => (
             <Link
               href={`/search?categoryId=${category.id}`}
-              className={"w-full bg-[#FAFAFA] p-[15px] "}
+              className={"w-full bg-[#FAFAFA] p-[15px] rounded-[10px]"}
               key={category.id}
             >
-              <Image
-                src={process.env.NEXT_PUBLIC_STATIC_URL + category.image}
-                alt={category.name}
-                width={300}
-                height={300}
-                className={"rounded-[10px] w-full"}
-              />
+              <div className="relative w-full h-[300px]">
+                <Image
+                  src={process.env.NEXT_PUBLIC_STATIC_URL + category.image}
+                  alt={category.name}
+                  className={"rounded-[10px] object-right"}
+                  fill
+                />
+              </div>
+
               <div className={"mx-5"}>
                 <h3 className={"text-[20px] font-medium mt-2.5"}>
                   {category.name}
