@@ -4,8 +4,8 @@ function BannerMobile() {
     <div className="relative">
       <div className="relative w-[330px] h-[224px]">
         <Image
-          src="/BannerMob.png"
-          alt="Banner"
+          src="/BannerMob.svg"
+          alt="Mobile Banner"
           fill
           className="object-contain"
         />
