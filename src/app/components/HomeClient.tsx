@@ -12,7 +12,7 @@ const HomeClient: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center md:min-h-[91vh] min-h-[78vh]">
-      <div className="flex flex-col items-center justify-center flex-1 space-y-10">
+      <div className="relative flex flex-col items-center justify-center flex-1 space-y-10">
         <div className="hidden sm:hidden md:flex sm:justify-center">
           <Banner />
         </div>
