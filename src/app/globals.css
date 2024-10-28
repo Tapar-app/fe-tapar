@@ -39,3 +39,15 @@ button:hover .tooltip-hover {
   transform: translateY(-5px);
   z-index: 10;
 }
+
+@media (min-width: 1024px) {
+  .banner {
+    bottom: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .banner {
+    bottom: 100px;
+  }
+}
