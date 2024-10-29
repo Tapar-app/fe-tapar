@@ -1,10 +1,10 @@
 import Image from "next/image";
 function Banner() {
   return (
-    <div className="absolute ">
+    <div className="absolute">
       <div className="relative w-[330px] h-[224px] md:w-[600px] md:h-[117px] lg:w-[681px] lg:h-[117px] banner">
         <Image
-          src="https://static.tapar.az/images/Banner.svg"
+          src="/Banner.gif"
           alt="Banner"
           fill
           className="object-contain"
