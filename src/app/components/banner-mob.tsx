@@ -1,7 +1,7 @@
 import Image from "next/image";
 function BannerMobile() {
   return (
-    <div className="relative ">
+    <div className="relative">
       <div className="relative w-[330px] h-[224px] bannerMob">
         <Image
           src="/BannerMob.gif"
