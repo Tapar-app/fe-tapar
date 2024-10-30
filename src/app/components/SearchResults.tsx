@@ -130,7 +130,7 @@ const SearchResults: React.FC = () => {
                     )
                     ?.shopNumbers.map((shopNumber) => (
                       <div
-                        className="w-6 h-6 text-[#23283C] rounded-[6px] bg-white flex justify-center items-center text-[12px]"
+                        className="w-6 h-6 text-[#23283C] rounded-[6px] bg-[#E1E1E1] flex justify-center items-center text-[12px]"
                         key={shopNumber}
                       >
                         {shopNumber}
