@@ -16,6 +16,7 @@ const MainInput: React.FC<MainInputProps> = ({
 }) => {
   const [suggestion, setSuggestion] = useState<SearchResult[]>([]);
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+  const [visibleReset, setVisibleReset] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
@@ -50,6 +51,7 @@ const MainInput: React.FC<MainInputProps> = ({
 
   const handleReset = () => {
     setKeyword("");
+    setVisibleReset(false);
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -59,6 +61,7 @@ const MainInput: React.FC<MainInputProps> = ({
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
+    setVisibleReset(value.length > 0);
   };
 
   const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -113,13 +116,15 @@ const MainInput: React.FC<MainInputProps> = ({
           className="bg-none lg:w-[681px] lg:h-[56px] md:w-[581px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder"
           placeholder="Axtardığınızı bura yazın!"
         />
-        <button
-          type="button"
-          className="absolute w-[24px] h-[24px] text-[#8E8E8E] right-4 opacity-[50%] hover:opacity-100"
-          onClick={handleReset}
-        >
-          <CloseSquare />
-        </button>
+        {visibleReset && (
+          <button
+            type="button"
+            className="absolute w-[24px] h-[24px] text-[#8E8E8E] right-4 opacity-[50%] hover:opacity-100"
+            onClick={handleReset}
+          >
+            <CloseSquare />
+          </button>
+        )}
       </div>
       {isLoading || suggestions.length > 0 ? (
         <ul
