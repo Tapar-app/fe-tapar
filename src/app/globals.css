@@ -51,3 +51,49 @@ button:hover .tooltip-hover {
     bottom: 100px;
   }
 }
+
+@media (min-width: 768px) {
+  .bannerMob {
+    bottom: 100px;
+  }
+}
+
+.bg-color-0 {
+  background-color: #116dda1a;
+}
+
+.bg-color-1 {
+  background-color: #f5a6301a;
+}
+
+.bg-color-2 {
+  background-color: #f5cba7;
+}
+
+.bg-color-3 {
+  background-color: #d6eaf8;
+}
+
+.bg-color-4 {
+  background-color: #fad7a0;
+}
+
+.text-color-0 {
+  color: #116dda;
+}
+
+.text-color-1 {
+  color: #f5a630;
+}
+
+.text-color-2 {
+  color: #f5cba7;
+}
+
+.text-color-3 {
+  color: #d6eaf8;
+}
+
+.text-color-4 {
+  color: #fad7a0;
+}
