@@ -24,22 +24,22 @@ function SocialMedia() {
   };
 
   return (
-    <div className="flex items-center gap-x-[20px] opacity-[50%]">
+    <div className="flex items-center gap-x-[20px] ">
       <Link
         href="https://www.tiktok.com/@tapar_az"
-        className="flex flex-col items-center"
+        className="flex flex-col items-center "
       >
-        <div className="relative md:w-[24px] md:h-[24px] w-[22px] h-[22px]">
+        <div className="relative md:w-[24px] md:h-[24px] w-[22px] h-[22px] opacity-[50%] hover:opacity-100 transition-opacity duration-100 ease-in-out">
           <Image src="/ic_round-tiktok.svg" alt="Tiktok" fill />
         </div>
       </Link>
       <button onClick={handleInstagramClick} className="flex flex-col">
-        <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px]">
+        <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px] opacity-[50%] hover:opacity-100 transition-opacity duration-100 ease-in-out">
           <Image src="/ri_instagram-fill.svg" alt="Instagram" fill />
         </div>
       </button>
       <button onClick={openEmail} className="flex flex-col">
-        <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px]">
+        <div className="relative md:w-[24px] md:h-[24px] w-[20px] h-[20px] opacity-[50%] hover:opacity-100 transition-opacity duration-100 ease-in-out">
           <Image src="/majesticons_mail.svg" alt="Gmail" fill />
         </div>
       </button>
