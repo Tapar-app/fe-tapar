@@ -75,24 +75,31 @@ const SearchResults: React.FC = () => {
               key={group.bazaarId}
               className="bg-[#FAFAFA] rounded-[10px] p-[15px] flex gap-5 min-h-[210px] max-sm:flex-col"
             >
-              <div className="relative w-full h-[173px]">
-                <Image
-                  src={process.env.NEXT_PUBLIC_STATIC_URL + categoryData!.image}
-                  alt={categoryData?.name || ""}
-                  fill
-                  className="object-cover rounded-[10px]"
-                  priority
-                  quality={100}
-                />
+              <div className="flex flex-col">
+                <div className="relative w-full h-[173px]">
+                  <Image
+                    src={
+                      process.env.NEXT_PUBLIC_STATIC_URL + categoryData!.image
+                    }
+                    alt={categoryData?.name || ""}
+                    fill
+                    className="object-cover rounded-[10px]"
+                    priority
+                    quality={100}
+                  />
+                </div>
+                <div className="bg-[#116DDA1A] w-[168px] h-[38px] flex justify-center items-center mt-[10px] rounded-[5px]">
+                  <p className="text-[#116DDA] text-center text-[12px]">
+                    {group.bazaarName}
+                  </p>
+                </div>
               </div>
+
               <div className="w-full">
                 <div className="flex w-full justify-between items-center mb-[15px] gap-4">
                   <h4 className="text-[#23283C] text-[24px] font-medium ">
                     {categoryData.name}
                   </h4>
-                  <p className="text-[#6D7287] text-[12px]">
-                    {group.bazaarName}
-                  </p>
                 </div>
 
                 <h5 className="mb-[10px] text-[#6D7287]">Sıra</h5>
