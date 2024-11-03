@@ -40,7 +40,6 @@ const SearchResults: React.FC = () => {
 
   useEffect(() => {
     if (categoryData) {
-      // Setting the first sequence as default
       const defaultSelections: { [key: number]: number } = {};
       categoryData.bazaarGroups.forEach((group) => {
         if (group.bazaarDetails.length > 0) {
@@ -70,7 +69,7 @@ const SearchResults: React.FC = () => {
             "relative grid grid-cols-1 min-[900px]:grid-cols-2 min-[1200px]:grid-cols-3 gap-[30px] mt-5"
           }
         >
-          {categoryData.bazaarGroups.map((group) => (
+          {categoryData.bazaarGroups.map((group, index) => (
             <div
               key={group.bazaarId}
               className="bg-[#FAFAFA] rounded-[10px] p-[15px] flex gap-5 min-h-[210px] max-sm:flex-col"
@@ -88,8 +87,17 @@ const SearchResults: React.FC = () => {
                     quality={100}
                   />
                 </div>
-                <div className="bg-[#116DDA1A] w-full sm:w-[168px] h-[38px] flex justify-center items-center mt-[10px] rounded-[5px]">
-                  <p className="text-[#116DDA] text-center text-[12px]">
+
+                <div
+                  className={`w-full sm:w-[168px] h-[38px] flex justify-center items-center mt-[10px] rounded-[5px] ${`bg-color-${
+                    index % 5
+                  }`}`}
+                >
+                  <p
+                    className={`text-color-${
+                      index % 5
+                    } text-center text-[12px]`}
+                  >
                     {group.bazaarName}
                   </p>
                 </div>
