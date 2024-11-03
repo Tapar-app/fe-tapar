@@ -88,7 +88,7 @@ const SearchResults: React.FC = () => {
                     quality={100}
                   />
                 </div>
-                <div className="bg-[#116DDA1A] w-[168px] h-[38px] flex justify-center items-center mt-[10px] rounded-[5px]">
+                <div className="bg-[#116DDA1A] w-full sm:w-[168px] h-[38px] flex justify-center items-center mt-[10px] rounded-[5px]">
                   <p className="text-[#116DDA] text-center text-[12px]">
                     {group.bazaarName}
                   </p>
