@@ -21,7 +21,7 @@ const HomeClient: React.FC = () => {
         </div>
 
         <div>
-          <h1 className="xl:text-[60px] lg:text-[60px] sm:text-[40px] text-[40px] font-semibold text-center">
+          <h1 className="xl:text-[60px] lg:text-[60px] sm:text-[40px] text-[40px] text-red-500 font-semibold text-center">
             Axtaran - <span className="text-[#F5A630]">Tapar</span>
             <span className="exclamation-mark">!</span>
           </h1>
