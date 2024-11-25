@@ -13,7 +13,7 @@ function CategoryClient({ categoryData }: CategoryClientProps) {
   return (
     <div className="relative flex flex-col items-center">
       <div className="w-auto">
-        <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/*<MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />*/}
       </div>
 
       <div className="box">

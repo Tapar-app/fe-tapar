@@ -21,6 +21,7 @@ const MainInput: React.FC<MainInputProps> = ({
   const suggestionsRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
 
+  // Debounce the keyword to avoid frequent API calls
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedKeyword(keyword);
@@ -31,13 +32,14 @@ const MainInput: React.FC<MainInputProps> = ({
     };
   }, [keyword]);
 
+  // Fetch search suggestions based on the debounced keyword and activeTab
   const {
     data: suggestions = [],
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["searchSuggestions", debouncedKeyword],
-    queryFn: () => fetchSearchSuggestions(debouncedKeyword),
+    queryKey: ["searchSuggestions", debouncedKeyword, activeTab],
+    queryFn: () => fetchSearchSuggestions(debouncedKeyword, activeTab),
     enabled: !!debouncedKeyword,
   });
 
@@ -48,7 +50,7 @@ const MainInput: React.FC<MainInputProps> = ({
       `/search?categoryId=${categoryId}&shoppingCenterId=${shoppingCenterId}`
     );
   };
-
+  // Reset the input and suggestions
   const handleReset = () => {
     setKeyword("");
     setVisibleReset(false);
@@ -64,11 +66,12 @@ const MainInput: React.FC<MainInputProps> = ({
     setVisibleReset(value.length > 0);
   };
 
+  // Handle Enter key to trigger a search
   const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter" || !keyword.trim()) return;
 
     try {
-      const searchResults = await fetchSearchResults(keyword);
+      const searchResults = await fetchSearchResults(keyword, activeTab);
 
       if (searchResults.length > 0) {
         const { id, shoppingCenter } = searchResults[0];
@@ -76,13 +79,14 @@ const MainInput: React.FC<MainInputProps> = ({
           `/search?categoryId=${id}&shoppingCenterId=${shoppingCenter.id}`
         );
       } else {
-        router.push(`/search?keyword=${keyword}`);
+        router.push(`/search?keyword=${keyword}&shoppingCenterId=${activeTab}`);
       }
     } catch (error) {
       console.error("Search failed:", error);
     }
   };
 
+  // Close suggestions on outside click
   const handleClickOutside = (event: MouseEvent) => {
     if (
       inputRef.current &&
