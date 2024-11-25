@@ -9,7 +9,7 @@ function SearchPage() {
     <div className={"mx-5 sm:mx-[50px]"}>
       <div className={"flex justify-center"}>
         <Suspense>
-          <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          {/*<MainTabs activeTab={activeTab} setActiveTab={setActiveTab}*/}
         </Suspense>
       </div>
       <Suspense>
