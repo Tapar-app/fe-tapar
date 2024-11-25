@@ -7,14 +7,20 @@ export const fetchSearchResults = async (
   keyword: string,
   shoppingCenterId?: number
 ): Promise<SearchResult[]> => {
-  let url = `${apiUrl}/search?keyword=${keyword}`;
+  if (!keyword || keyword.trim().length === 0) {
+    console.error("Keyword is invalid or empty");
+    return [];
+  }
+
+  let url = `${apiUrl}/search?keyword=${encodeURIComponent(keyword)}`;
   if (shoppingCenterId) {
     url += `&shoppingCenterId=${shoppingCenterId}`;
   }
+
   try {
     const { data } = await api.get(url);
     console.log("Fetched results:", data.object);
-    return data.object;
+    return data.object || [];
   } catch (error) {
     console.error("Error fetching results:", error);
     return [];
@@ -22,14 +28,18 @@ export const fetchSearchResults = async (
 };
 
 export const fetchSearchSuggestions = async (
-  keyword: string
+  keyword: string,
+  shoppingCenterId?: number
 ): Promise<SearchResult[]> => {
   if (!keyword || keyword.trim().length === 0) {
     console.error("Keyword is invalid or empty");
     return [];
   }
 
-  const url = `${apiUrl}/search?keyword=${keyword}`;
+  let url = `${apiUrl}/search?keyword=${keyword}`;
+  if (shoppingCenterId) {
+    url += `&shoppingCenterId=${shoppingCenterId}`;
+  }
   try {
     const { data } = await api.get(url);
     console.log("Fetched suggestions:", data.object);
