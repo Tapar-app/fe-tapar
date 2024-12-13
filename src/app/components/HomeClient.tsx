@@ -35,7 +35,7 @@ const HomeClient: React.FC = () => {
         </Suspense>
 
         <Suspense>
-          <MainTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <MainTabs />
         </Suspense>
       </div>
 
