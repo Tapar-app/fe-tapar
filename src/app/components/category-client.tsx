@@ -3,10 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  CategoryApi,
-  GetAllCategoriesByShoppingCenter,
-} from "../lib/api/category.api";
+import { CategoryApi } from "../lib/api/category.api";
 import ItemsNotFound from "./melumat-tapilmadi";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -14,18 +11,18 @@ import CategoryTabs from "./category-tabs";
 import Loading from "./Loading";
 
 function CategoryClient() {
-  const params = useSearchParams();
+  const searchParams = useSearchParams();
   const defaultShoppingCenterId = 1;
   const [activeTab, setActiveTab] = useState<number>(defaultShoppingCenterId);
 
   useEffect(() => {
-    const shoppingCenterId = params.get("shoppingCenterId");
+    const shoppingCenterId = searchParams.get("shoppingCenterId");
     setActiveTab(
       shoppingCenterId
         ? parseInt(shoppingCenterId, 10)
         : defaultShoppingCenterId
     );
-  }, [params]);
+  }, [searchParams]);
 
   const {
     data: categoryData,
