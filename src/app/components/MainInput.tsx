@@ -8,12 +8,14 @@ import { fetchSearchResults, fetchSearchSuggestions } from "../lib/search";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "./Loading";
+import { useShoppingCenterStore } from "../store/shopping-center-store";
 
 const MainInput: React.FC<MainInputProps> = ({
   keyword,
   setKeyword,
   activeTab,
 }) => {
+  const { shoppingCenterId } = useShoppingCenterStore();
   const [suggestion, setSuggestion] = useState<SearchResult[]>([]);
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
   const [visibleReset, setVisibleReset] = useState(false);
@@ -38,8 +40,8 @@ const MainInput: React.FC<MainInputProps> = ({
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["searchSuggestions", debouncedKeyword, activeTab],
-    queryFn: () => fetchSearchSuggestions(debouncedKeyword, activeTab),
+    queryKey: ["searchSuggestions", debouncedKeyword, shoppingCenterId],
+    queryFn: () => fetchSearchSuggestions(debouncedKeyword, shoppingCenterId),
     enabled: !!debouncedKeyword,
   });
 
@@ -71,7 +73,7 @@ const MainInput: React.FC<MainInputProps> = ({
     if (e.key !== "Enter" || !keyword.trim()) return;
 
     try {
-      const searchResults = await fetchSearchResults(keyword, activeTab);
+      const searchResults = await fetchSearchResults(keyword, shoppingCenterId);
 
       if (searchResults.length > 0) {
         const { id, shoppingCenter } = searchResults[0];
@@ -79,7 +81,9 @@ const MainInput: React.FC<MainInputProps> = ({
           `/search?categoryId=${id}&shoppingCenterId=${shoppingCenter.id}`
         );
       } else {
-        router.push(`/search?keyword=${keyword}&shoppingCenterId=${activeTab}`);
+        router.push(
+          `/search?keyword=${keyword}&shoppingCenterId=${shoppingCenterId}`
+        );
       }
     } catch (error) {
       console.error("Search failed:", error);

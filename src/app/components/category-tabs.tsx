@@ -1,14 +1,18 @@
 "use client";
 import React, { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { ShoppingCenterApi } from "@/app/lib/api/shopping-center.api";
 import Loading from "./Loading";
-import { useShoppingCenterStore } from "@/app/store/shopping-center-store";
 
-const MainTabs: React.FC = () => {
+interface MainTabsProps {
+  activeTab: number;
+  setActiveTab: (tab: number) => void;
+}
+
+const MainTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
   const params = useSearchParams();
-  const { shoppingCenterId, setShoppingCenterId } = useShoppingCenterStore();
+  const router = useRouter();
 
   const {
     data: shoppingCenters,
@@ -19,24 +23,23 @@ const MainTabs: React.FC = () => {
     queryFn: ShoppingCenterApi.getAll,
   });
 
-  // On first load, set the default tab
   useEffect(() => {
     if (shoppingCenters?.data?.object?.length) {
       const defaultTab = params.get("shoppingCenterId")
         ? parseInt(params.get("shoppingCenterId") as string, 10)
         : shoppingCenters.data.object[0]?.id;
 
-      setShoppingCenterId(defaultTab);
+      setActiveTab(defaultTab);
     }
-  }, [params, shoppingCenters, setShoppingCenterId]);
+  }, [params, shoppingCenters, setActiveTab]);
+
+  const handleTabClick = (tabId: number) => {
+    setActiveTab(tabId);
+    router.push(`/categories?shoppingCenterId=${tabId}`, { scroll: false }); // Update URL
+  };
 
   if (isLoading) return <Loading />;
   if (error) return <div>Error loading shopping centers.</div>;
-
-  const handleTabClick = (tabId: number) => {
-    // Update Zustand state without redirecting
-    setShoppingCenterId(tabId);
-  };
 
   return (
     <div className="bg-[#F3F3F3] p-[8px] rounded-2xl">
@@ -45,9 +48,7 @@ const MainTabs: React.FC = () => {
           <button
             key={bazaar.id}
             className={`font-[700] ${
-              shoppingCenterId === bazaar.id
-                ? "text-black bg-white"
-                : "text-[#8E8E8E]"
+              activeTab === bazaar.id ? "text-black bg-white" : "text-[#8E8E8E]"
             } p-2 rounded-lg`}
             onClick={() => handleTabClick(bazaar.id)}
           >

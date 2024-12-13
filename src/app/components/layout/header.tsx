@@ -3,8 +3,11 @@
 import { Icons } from "@/app/components/icons";
 import Link from "next/link";
 import SocialMedia from "../social-media";
+import { useShoppingCenterStore } from "@/app/store/shopping-center-store";
 
 export default function Header() {
+  const { shoppingCenterId } = useShoppingCenterStore();
+
   return (
     <header className="z-10 sticky top-0 md:pl-[50px] md:pr-[50px] sm:pl-[30px] sm:pr-[30px] pl-[30px] pr-[30px] pt-[26px] pb-[26px] h-[100px] w-full bg-white">
       <div className="flex items-center justify-between">
@@ -13,7 +16,7 @@ export default function Header() {
             <Icons.logo />
           </Link>
           <Link
-            href="/categories"
+            href={`/categories?shoppingCenterId=${shoppingCenterId}`}
             className="bg-[#FAFAFA] rounded-[10px] py-2 sm:py-3 px-3 sm:px-5 text-[14px]"
           >
             Bütün kateqoriyalar
