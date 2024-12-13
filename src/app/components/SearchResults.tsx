@@ -22,7 +22,7 @@ const SearchResults: React.FC = () => {
     queryKey: ["categoryData", categoryId, shoppingCenterId],
     queryFn: () =>
       CategoryApi.getCategoryInformation(shoppingCenterId, categoryId),
-    enabled: !!categoryId,
+    enabled: !!categoryId && !!shoppingCenterId,
   });
 
   const categoryData = categoryDetails?.data;

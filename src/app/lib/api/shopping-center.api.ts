@@ -25,12 +25,12 @@ export interface GetShoppingCenterByIdResponse extends ResponseType {
 export const ShoppingCenterApi = {
   async getAll() {
     return await api.get<GetAllShoppingCentersResponse>(
-      `${shoppingCenterBaseUrl}/all`,
+      `${shoppingCenterBaseUrl}/all`
     );
   },
   async getById(shoppingCenterId: string) {
     return await api.get<GetShoppingCenterByIdResponse>(
-      `${shoppingCenterBaseUrl}/get/bazaar/sc/${shoppingCenterId}`,
+      `${shoppingCenterBaseUrl}/get/bazaar/sc/${shoppingCenterId}`
     );
   },
 };

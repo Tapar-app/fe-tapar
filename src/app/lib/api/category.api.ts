@@ -47,9 +47,11 @@ export interface GetCategoriesByKey extends ResponseType {
   object: SearchCategoryItem[];
 }
 export const CategoryApi = {
-  async getAll() {
+  async getAll(shoppingCenterId: number | null = null) {
     return await api.get<GetAllCategoriesByShoppingCenter>(
-      `${categoryBaseUrl}/all/main`
+      `${categoryBaseUrl}/all/main${
+        shoppingCenterId ? `?shoppingCenterId=${shoppingCenterId}` : ""
+      }`
     );
   },
   async getCategoryInformation(
@@ -67,5 +69,11 @@ export const CategoryApi = {
         shoppingCenterId,
       },
     });
+  },
+
+  async getByShoppingCenter(shoppingCenterId: string | null) {
+    return await api.get<GetAllCategoriesByShoppingCenter>(
+      `${categoryBaseUrl}/sc/${shoppingCenterId}`
+    );
   },
 };
