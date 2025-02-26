@@ -1,9 +1,7 @@
-import api from "@/app/lib/api/index";
-import { ResponseType } from "@/app/lib/types";
-import exp from "node:constants";
-import getImportExportSpecifierInfo from "sucrase/dist/types/util/getImportExportSpecifierInfo";
+import api from '@/lib/api/index';
+import { ResponseType } from '@/lib/types';
 
-const shoppingCenterBaseUrl = "/shopping-center";
+const shoppingCenterBaseUrl = '/shopping-center';
 
 export type ShoppingCenter = {
   id: number;

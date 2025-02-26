@@ -1,7 +1,7 @@
-import api from "@/app/lib/api/index";
-import { ResponseType } from "@/app/lib/types";
+import api from '@/lib/api/index';
+import { ResponseType } from '@/lib/types';
 
-const categoryBaseUrl = "/category";
+const categoryBaseUrl = '/category';
 
 export type Category = {
   id: number;
@@ -50,7 +50,7 @@ export const CategoryApi = {
   async getAll(shoppingCenterId: number | null = null) {
     return await api.get<GetAllCategoriesByShoppingCenter>(
       `${categoryBaseUrl}/all/main${
-        shoppingCenterId ? `?shoppingCenterId=${shoppingCenterId}` : ""
+        shoppingCenterId ? `?shoppingCenterId=${shoppingCenterId}` : ''
       }`
     );
   },
