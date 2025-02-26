@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect } from 'react';
 
 // Extend the Window interface to include _paq
 declare global {
@@ -13,15 +13,15 @@ declare global {
 function initializeMatomo() {
   if (!isServer) {
     const _paq = (window._paq = window._paq || []);
-    _paq.push(["trackPageView"]);
-    _paq.push(["enableLinkTracking"]);
-    const u = "//matomo.tapar.az/";
-    _paq.push(["setTrackerUrl", `${u}matomo.php`]);
-    _paq.push(["setSiteId", "1"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    const u = '//matomo.tapar.az/';
+    _paq.push(['setTrackerUrl', `${u}matomo.php`]);
+    _paq.push(['setSiteId', '1']);
 
     const d = document,
-      g = d.createElement("script"),
-      s = d.getElementsByTagName("script")[0];
+      g = d.createElement('script'),
+      s = d.getElementsByTagName('script')[0];
     g.async = true;
     g.src = `${u}matomo.js`;
     if (s?.parentNode) {
@@ -32,7 +32,7 @@ function initializeMatomo() {
 
 let initialized = false;
 
-const isServer = typeof window === "undefined";
+const isServer = typeof window === 'undefined';
 
 function getMatomo() {
   if (!isServer && !initialized) {
