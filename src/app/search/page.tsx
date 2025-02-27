@@ -1,9 +1,10 @@
-import React, { Suspense, useState } from "react";
-import SearchResults from "../components/SearchResults";
-import MainTabs from "@/app/components/MainTabs";
+import React, { Suspense } from 'react';
+
+import SearchResults from './components/SearchResults';
+
 function SearchPage() {
   return (
-    <div className={"mx-5 sm:mx-[50px]"}>
+    <div className={'mx-5 sm:mx-[50px]'}>
       <Suspense>
         <SearchResults />
       </Suspense>

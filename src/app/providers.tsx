@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const isServer = typeof window === "undefined";
+const isServer = typeof window === 'undefined';
 
 function makeQueryClient() {
   return new QueryClient({

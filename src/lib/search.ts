@@ -1,14 +1,15 @@
-import { SearchResult } from "../types/searchTypes";
-import api from "./api";
+import { SearchResult } from '@/types/searchTypes';
 
-const apiUrl = "/category";
+import api from './api';
+
+const apiUrl = '/category';
 
 export const fetchSearchResults = async (
   keyword: string,
   shoppingCenterId?: number
 ): Promise<SearchResult[]> => {
   if (!keyword || keyword.trim().length === 0) {
-    console.error("Keyword is invalid or empty");
+    console.error('Keyword is invalid or empty');
     return [];
   }
 
@@ -19,10 +20,10 @@ export const fetchSearchResults = async (
 
   try {
     const { data } = await api.get(url);
-    console.log("Fetched results:", data.object);
+    console.log('Fetched results:', data.object);
     return data.object || [];
   } catch (error) {
-    console.error("Error fetching results:", error);
+    console.error('Error fetching results:', error);
     return [];
   }
 };
@@ -32,7 +33,7 @@ export const fetchSearchSuggestions = async (
   shoppingCenterId?: number
 ): Promise<SearchResult[]> => {
   if (!keyword || keyword.trim().length === 0) {
-    console.error("Keyword is invalid or empty");
+    console.error('Keyword is invalid or empty');
     return [];
   }
 
@@ -42,10 +43,10 @@ export const fetchSearchSuggestions = async (
   }
   try {
     const { data } = await api.get(url);
-    console.log("Fetched suggestions:", data.object);
+    console.log('Fetched suggestions:', data.object);
     return data.object.slice(0, 7);
   } catch (error) {
-    console.error("Error fetching suggestions:", error);
+    console.error('Error fetching suggestions:', error);
     return [];
   }
 };

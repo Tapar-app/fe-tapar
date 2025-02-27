@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import Link from "next/link";
 import Image from "next/image";
-import { CategoryApi } from "../lib/api/category.api";
-import ItemsNotFound from "./melumat-tapilmadi";
+import { CategoryApi } from "../../../lib/api/category.api";
+
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import CategoryTabs from "./category-tabs";
-import Loading from "./Loading";
+
+import Loading from "../../../components/Loading";
+import CategoryTabs from "@/app/categories/components/CategoryTabs";
+import ItemsNotFound from "../../../components/NotFound";
 
 function CategoryClient() {
   const searchParams = useSearchParams();

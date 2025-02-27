@@ -2,15 +2,16 @@
 import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { ShoppingCenterApi } from "@/app/lib/api/shopping-center.api";
-import Loading from "./Loading";
+
+import { ShoppingCenterApi } from "@/lib/api/shopping-center.api";
+import Loading from "@/components/Loading";
 
 interface MainTabsProps {
   activeTab: number;
   setActiveTab: (tab: number) => void;
 }
 
-const MainTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
+const CategoryTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -35,7 +36,7 @@ const MainTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
 
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
-    router.push(`/categories?shoppingCenterId=${tabId}`, { scroll: false }); // Update URL
+    router.push(`/categories?shoppingCenterId=${tabId}`, { scroll: false }); // Updating URL
   };
 
   if (isLoading) return <Loading />;
@@ -60,4 +61,4 @@ const MainTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
   );
 };
 
-export default MainTabs;
+export default CategoryTabs;
