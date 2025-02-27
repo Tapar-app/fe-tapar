@@ -6,6 +6,6 @@ interface ShoppingCenterState {
 }
 
 export const useShoppingCenterStore = create<ShoppingCenterState>((set) => ({
-  shoppingCenterId: 1, // Default to the first shopping center
+  shoppingCenterId: 1,
   setShoppingCenterId: (id: number) => set({ shoppingCenterId: id }),
 }));
