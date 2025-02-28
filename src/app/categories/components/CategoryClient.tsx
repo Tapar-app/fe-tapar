@@ -73,8 +73,8 @@ function CategoryClient() {
 
       <div className='box'>
         {categoryData?.data.object.length > 0 ? (
-          <div className='grid grid-cols-[1fr_4fr] gap-3'>
-            <div className='bg-[#FAFAFA] rounded-[16px] p-5 min-w-[285px]'>
+          <div className='grid sm:grid-cols-1 md:grid-cols-[1fr_6fr] lg:grid-cols-[1fr_5fr] xl:grid-cols-[1fr_4fr] gap-3'>
+            <div className='bg-[#FAFAFA] rounded-[16px] p-5 min-w-[285px] max-h-[650px] overflow-y-scroll'>
               <h2 className='text-[24px] font-medium mb-[15px]'>
                 Bütün kateqoriyalar
               </h2>
@@ -107,14 +107,14 @@ function CategoryClient() {
                 ))}
               </div>
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] w-full max-h-96'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-[30px] w-full max-h-96'>
               {filteredList?.map((category) => (
                 <Link
                   href={`/search?shoppingCenterId=${activeTab}&categoryId=${category.id}`}
                   className='w-full bg-[#FAFAFA] p-4 rounded-[10px]'
                   key={category.id}
                 >
-                  <div className='relative w-full h-[250px]'>
+                  <div className='relative w-full h-[200px]'>
                     <Image
                       src={
                         category.image
