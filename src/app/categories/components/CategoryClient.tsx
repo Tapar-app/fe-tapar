@@ -18,6 +18,7 @@ function CategoryClient() {
 
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [activeTab, setActiveTab] = useState<number>(defaultShoppingCenterId);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   useEffect(() => {
     const shoppingCenterId = searchParams.get('shoppingCenterId');
@@ -37,6 +38,10 @@ function CategoryClient() {
     queryFn: () => CategoryApi.getAll(activeTab),
     enabled: activeTab > 0, // Only fetch if activeTab is valid
   });
+
+  const toggleAccordion = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const toggleChecked = (key: string) => {
     setCheckedItems((prev) => {
@@ -74,38 +79,61 @@ function CategoryClient() {
       <div className='box'>
         {categoryData?.data.object.length > 0 ? (
           <div className='grid sm:grid-cols-1 md:grid-cols-[1fr_6fr] lg:grid-cols-[1fr_5fr] xl:grid-cols-[1fr_4fr] gap-3'>
-            <div className='bg-[#FAFAFA] rounded-[16px] p-5 min-w-[285px] max-h-[650px] overflow-y-scroll'>
-              <h2 className='text-[24px] font-medium mb-[15px]'>
-                Bütün kateqoriyalar
-              </h2>
-              <div className='flex flex-col'>
-                {categoryData.data.object.map((category) => (
-                  <div
-                    key={category.id}
-                    className='flex gap-3 h-11 items-center justify-between cursor-pointer'
-                    onClick={() => toggleChecked(category.name)}
-                  >
-                    <div className='flex items-center'>
-                      <Image
-                        className='mr-2'
-                        src={
-                          category.icon
-                            ? process.env.NEXT_PUBLIC_STATIC_URL + category.icon
-                            : '/default-icon.png'
-                        }
-                        alt={category.name}
-                        width={24}
-                        height={24}
-                      />
-                      {category.name}
-                    </div>
-                    <Checkbox
-                      checked={checkedItems[category.name]}
-                      onChange={() => toggleChecked(category.name)}
-                    />
-                  </div>
-                ))}
+            <div
+              className={`bg-[#FAFAFA] rounded-[16px] p-5 min-w-[285px] ${
+                isOpen
+                  ? 'max-h-[calc(100vh-350px)]  overflow-y-scroll'
+                  : 'max-h-[100px]'
+              }`}
+            >
+              <div
+                className='flex items-center justify-between mb-2 cursor-pointer'
+                onClick={toggleAccordion}
+              >
+                <h2 className='text-[24px] font-medium mr-2'>
+                  Bütün kateqoriyalar
+                </h2>
+                <Image
+                  src='/arrow-up.svg'
+                  alt='arrow'
+                  width={24}
+                  height={24}
+                  className={`transition-transform duration-300 ${
+                    isOpen ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
               </div>
+              {isOpen && (
+                <div className='flex flex-col'>
+                  {categoryData.data.object.map((category) => (
+                    <div
+                      key={category.id}
+                      className='flex gap-3 h-11 items-center justify-between cursor-pointer'
+                      onClick={() => toggleChecked(category.name)}
+                    >
+                      <div className='flex items-center'>
+                        <Image
+                          className='mr-2'
+                          src={
+                            category.icon
+                              ? process.env.NEXT_PUBLIC_STATIC_URL +
+                                category.icon
+                              : '/default-icon.png'
+                          }
+                          alt={category.name}
+                          width={24}
+                          height={24}
+                        />
+                        {category.name}
+                      </div>
+                      <Checkbox
+                        checked={checkedItems[category.name]}
+                        onChange={() => toggleChecked(category.name)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-[30px] w-full max-h-96'>
               {filteredList?.map((category) => (
