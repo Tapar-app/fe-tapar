@@ -36,7 +36,7 @@ const CategoryTabs: React.FC<MainTabsProps> = ({ activeTab, setActiveTab }) => {
 
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
-    router.push(`/categories?shoppingCenterId=${tabId}`, { scroll: false }); // Update URL
+    router.push(`/categories?shoppingCenterId=${tabId}`, { scroll: false }); // Updating URL
   };
 
   if (isLoading) return <Loading />;

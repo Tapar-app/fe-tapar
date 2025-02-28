@@ -47,7 +47,7 @@ export interface GetCategoriesByKey extends ResponseType {
   object: SearchCategoryItem[];
 }
 export const CategoryApi = {
-  async getAll(shoppingCenterId: number | null = null) {
+  async getAll(shoppingCenterId: number | null) {
     return await api.get<GetAllCategoriesByShoppingCenter>(
       `${categoryBaseUrl}/all/main${
         shoppingCenterId ? `?shoppingCenterId=${shoppingCenterId}` : ''
