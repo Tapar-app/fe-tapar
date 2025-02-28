@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
-import Loading from "@/components/Loading";
+import Loading from '@/components/Loading';
 
-const CategoryClient = dynamic(() => import("./components/category-client"), {
+const CategoryClient = dynamic(() => import('./components/CategoryClient'), {
   ssr: false,
 });
 
