@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 
-import { MainInputProps, SearchResult } from '@/types/searchTypes';
+import { SearchResult } from '@/types/searchTypes';
 import { useShoppingCenterStore } from '@/store/shopping-center-store';
 
 import SearchIcon from './SearchIcon';
@@ -12,14 +12,14 @@ import CloseSquare from './CloseSquare';
 import { fetchSearchResults, fetchSearchSuggestions } from '../lib/search';
 import Loading from './Loading';
 
-const MainInput: React.FC<MainInputProps> = ({
-  keyword,
-  setKeyword,
-  activeTab,
-}) => {
+const MainInput = () => {
   const { shoppingCenterId } = useShoppingCenterStore();
-  const [suggestion, setSuggestion] = useState<SearchResult[]>([]);
+
+  const [keyword, setKeyword] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+  const [isOpen, toggleOpen] = useState<boolean>(false);
+
   const [visibleReset, setVisibleReset] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLUListElement>(null);
@@ -37,15 +37,17 @@ const MainInput: React.FC<MainInputProps> = ({
   }, [keyword]);
 
   // Fetch search suggestions based on the debounced keyword and activeTab
-  const {
-    data: suggestions = [],
-    error,
-    isLoading,
-  } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['searchSuggestions', debouncedKeyword, shoppingCenterId],
     queryFn: () => fetchSearchSuggestions(debouncedKeyword, shoppingCenterId),
     enabled: !!debouncedKeyword,
   });
+
+  useEffect(() => {
+    if (data) {
+      setSuggestions(data);
+    }
+  }, [data]);
 
   const handleSearch = async (categoryId: number, shoppingCenterId: number) => {
     if (!categoryId || !shoppingCenterId) return;
@@ -53,6 +55,9 @@ const MainInput: React.FC<MainInputProps> = ({
     router.push(
       `/search?categoryId=${categoryId}&shoppingCenterId=${shoppingCenterId}`
     );
+
+    setSuggestions([]);
+    setKeyword('');
   };
   // Reset the input and suggestions
   const handleReset = () => {
@@ -61,7 +66,7 @@ const MainInput: React.FC<MainInputProps> = ({
     if (inputRef.current) {
       inputRef.current.value = '';
     }
-    setSuggestion([]);
+    setSuggestions([]);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +105,8 @@ const MainInput: React.FC<MainInputProps> = ({
       suggestionsRef.current &&
       !suggestionsRef.current.contains(event.target as Node)
     ) {
-      setSuggestion([]);
+      setSuggestions([]);
+      setKeyword('');
     }
   };
 
@@ -123,7 +129,7 @@ const MainInput: React.FC<MainInputProps> = ({
           value={keyword}
           onChange={handleOnChange}
           onKeyDown={handleOnKeyDown}
-          className='bg-none lg:w-[681px] lg:h-[56px] md:w-[581px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder'
+          className='bg-none lg:w-[531px] lg:h-[56px] md:w-[251px] md:h-[50px] iphone-6-plus-portrait:w-[381px] iphone-6-portrait:w-[350px] iphone-5-portrait:w-[315px] iphone-5-portrait:h-[40px] w-[381px] h-[45px] outline-none border border-1 border-[#E1E1E1] pl-[50px] pr-[50px] rounded-[20px] custom-placeholder'
           placeholder='Axtardığınızı bura yazın!'
         />
         {visibleReset && (
@@ -155,7 +161,6 @@ const MainInput: React.FC<MainInputProps> = ({
                   index === suggestions.length - 1 ? 'rounded-b-[20px]' : ''
                 }`}
                 onClick={() => {
-                  setKeyword(suggestion.name);
                   handleSearch(suggestion.id, suggestion.shoppingCenter.id);
                 }}
               >
