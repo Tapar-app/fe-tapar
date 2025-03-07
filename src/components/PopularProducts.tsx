@@ -18,7 +18,7 @@ function PopularProducts() {
     <div className='w-full my-6'>
       <h1 className='text-3xl font-semibold mb-3'>Ən popular məhsullar</h1>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-3'>
         {popularCategories?.data?.object.map((category) => (
           <CategoryDetail categoryData={category} />
         ))}
