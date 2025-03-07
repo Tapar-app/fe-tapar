@@ -76,4 +76,9 @@ export const CategoryApi = {
       `${categoryBaseUrl}/sc/${shoppingCenterId}`
     );
   },
+  async getPopularCategories(shoppingCenterId: number) {
+    return await api.get<GetAllCategoriesByShoppingCenter>(
+      `${categoryBaseUrl}/most-popular?shoppingCenterId=${shoppingCenterId}`
+    );
+  },
 };

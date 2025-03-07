@@ -8,9 +8,3 @@ export interface SearchResult {
     active: boolean;
   };
 }
-
-export interface MainInputProps {
-  keyword: string;
-  setKeyword: (keyword: string) => void;
-  activeTab: number;
-}

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 
 import { ShoppingCenterApi } from '@/lib/api/shopping-center.api';
 import { useShoppingCenterStore } from '@/store/shopping-center-store';
@@ -41,22 +42,27 @@ const MainTabs: React.FC = () => {
   };
 
   return (
-    <div className='bg-[#F3F3F3] p-[8px] rounded-2xl'>
-      <div className='flex'>
-        {shoppingCenters?.data?.object?.map((bazaar: any) => (
-          <button
-            key={bazaar.id}
-            className={`font-[700] ${
-              shoppingCenterId === bazaar.id
-                ? 'text-black bg-white'
-                : 'text-[#8E8E8E]'
-            } p-2 rounded-lg`}
-            onClick={() => handleTabClick(bazaar.id)}
-          >
-            {bazaar.name}
-          </button>
-        ))}
-      </div>
+    <div className='flex space-x-4 p-4 bg-gray-100 rounded-lg'>
+      {shoppingCenters?.data?.object?.map((bazaar: any) => (
+        <button
+          key={bazaar.id}
+          className={`flex items-center justify-center px-4 py-2 rounded-lg ${
+            shoppingCenterId === bazaar.id
+              ? 'bg-white text-black shadow-md'
+              : ''
+          } transition-colors duration-200 flex-1`}
+          onClick={() => handleTabClick(bazaar.id)}
+        >
+          <Image
+            src={`${process.env.NEXT_PUBLIC_STATIC_URL}/${bazaar.icon}`}
+            alt='logo'
+            width={40} // Adjust based on your logo size
+            height={40} // Adjust based on your logo size
+            className='mr-2'
+          />
+          <span className='font-semibold'>{bazaar.name}</span>
+        </button>
+      ))}
     </div>
   );
 };
